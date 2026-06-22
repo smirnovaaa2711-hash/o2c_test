@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HR Test Platform</title>
+<meta name="description" content="Corporate HR test platform for GitHub Pages" />
+<style>
+:root {
+  --mint: #00C8AB;
+  --ocean: #00519A;
+  --bg: #f5fafb;
+  --surface: #ffffff;
+  --surface2: #f3f8fa;
+  --text: #17303d;
+  --muted: #5d7482;
+  --border: #dbe7ee;
+  --shadow: 0 10px 28px rgba(2,30,40,.08);
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: linear-gradient(180deg,#eef9f7 0%,var(--bg) 36%); color: var(--text); font-family: Inter, Arial, sans-serif; line-height: 1.55; }
+body { min-height: 100vh; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px 40px; }
+.hero { background: linear-gradient(135deg,var(--ocean),#0a6db0 55%,var(--mint)); color: #fff; padding: 34px 0 40px; box-shadow: var(--shadow); }
+.hero h1 { margin: 10px 0 8px; font-size: clamp(28px,4vw,44px); }
+.hero p { margin: 0; max-width: 900px; opacity: .96; }
+.badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.15); padding: 8px 12px; border-radius: 999px; font-weight: 700; font-size: 13px; }
+.grid { display: grid; grid-template-columns: 320px 1fr; gap: 20px; margin-top: -34px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+.card.soft { background: var(--surface2); }
+.hstack { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { appearance: none; border: none; border-radius: 12px; padding: 14px 18px; font-weight: 800; cursor: pointer; transition: .18s transform,.18s opacity; }
+.btn:hover { transform: translateY(-1px); }
+.primary { background: var(--mint); color: #053e38; }
+.secondary { background: #eaf3f8; color: var(--ocean); }
+.ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+input, textarea, select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: #fff; color: var(--text); font: inherit; outline: none; }
+input:focus, textarea:focus { border-color: var(--mint); box-shadow: 0 0 0 4px rgba(0,200,171,.12); }
+label { display: block; font-weight: 700; margin-bottom: 8px; }
+.small { color: var(--muted); font-size: 14px; }
+.section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.pill { display: inline-flex; align-items: center; padding: 7px 10px; border-radius: 999px; background: #e7f7f5; color: #0a5f57; font-weight: 800; font-size: 12px; }
+.kpi { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 14px; }
+.kpi .card { padding: 16px; }
+.kpi .v { font-size: 28px; font-weight: 900; margin-top: 6px; }
+.hidden { display: none !important; }
+.progress { height: 10px; background: #e8f1f4; border-radius: 999px; overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--mint); width: 0%; }
+.qbox { padding: 18px; border: 1px solid var(--border); border-radius: 16px; background: #fff; margin-top: 14px; }
+.opt { display: flex; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; margin-top: 10px; background: #fff; cursor: pointer; }
+.opt.sel { border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(0,81,154,.08); }
+.opt strong { min-width: 22px; color: var(--ocean); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th,td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+thead th { position: sticky; top: 0; background: #f8fcfd; z-index: 1; }
+.notice { border-left: 4px solid var(--mint); background: #f4fffd; padding: 14px 16px; border-radius: 14px; }
+@media(max-width:960px) { .grid { grid-template-columns: 1fr; } .kpi { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">Corporate HR Assessment · GitHub Pages ready</div>
+    <h1>Платформа тестирования кандидатов</h1>
+    <p>Экономика · Финансы · Маркетинг · Открытые вопросы. Автопроверка, таймеры, HR-оформление и админ-панель без сервера.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <aside class="card">
+      <div class="section-title"><h2 style="margin:0">Форма кандидата</h2><span class="pill">Start</span></div>
+      <div class="small" style="margin:10px 0 16px">Введите данные и начните тестирование.</div>
+      <label>ФИО<input id="fio" placeholder="Введите ФИО"></label>
+      <label>Email<input id="email" placeholder="Введите email"></label>
+      <label>Админ-панель<textarea id="adminPanel" rows="8" placeholder="Заметки админа, JSON, доп. инструкции"></textarea></label>
+      <div class="hstack" style="margin-top:14px">
+        <button class="btn primary" id="startBtn">Начать тест</button>
+        <button class="btn secondary" id="csvBtn">CSV</button>
+        <button class="btn ghost" id="themeBtn">Тема</button>
+      </div>
+      <div class="notice" style="margin-top:16px">
+        <b>Лимиты:</b> выбор ответа — 2 минуты, открытые вопросы — 6 минут, задачи — 15 минут.
+      </div>
+      <div class="small" style="margin-top:12px">Под GitHub Pages: сохраните этот файл как <b>index.html</b> в корень репозитория.</div>
+    </aside>
+
+    <section id="startPage" class="card">
+      <div class="section-title"><h2 style="margin:0">Стартовая страница</h2><span class="pill">Welcome</span></div>
+      <div style="white-space:pre-wrap;line-height:1.72;margin-top:14px">Добрый день!
+
+Спасибо за ваш отклик!
+
+Следующий этап — тестирование. На его выполнение обычно уходит около 60 минут, поэтому рекомендуем заранее выделить это время и выбрать спокойное место, где вас никто и ничто не будет отвлекать.
+
+В тесте есть вопросы с выбором ответа, открытые вопросы и задачи. На вопросы с выбором ответа отводится до 2 минут, на открытые вопросы — до 6 минут, на задачи — до 15 минут.
+
+Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач.
+
+Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.
+
+Желаем удачи! 🍀
+Будем рады познакомиться с вашим подходом в рамках тестирования и, если все сложится, встретиться с вами на очном интервью.</div>
+      <div class="kpi">
+        <div class="card soft"><div class="small">Экономика</div><div class="v" id="kEco">0</div></div>
+        <div class="card soft"><div class="small">Финансы</div><div class="v" id="kFin">0</div></div>
+        <div class="card soft"><div class="small">Маркетинг</div><div class="v" id="kMar">0</div></div>
+      </div>
+    </section>
+
+    <section id="testPage" class="card hidden">
+      <div class="section-title"><h2 style="margin:0">Тестирование</h2><span class="pill" id="modePill">Demo</span></div>
+      <div class="small" id="questionMeta" style="margin-top:8px"></div>
+      <div class="progress" style="margin-top:12px"><span id="bar"></span></div>
+      <h3 id="qText" style="margin:16px 0 0"></h3>
+      <div id="options" style="margin-top:10px"></div>
+      <textarea id="openAnswer" rows="6" class="hidden" placeholder="Введите ответ" style="margin-top:14px"></textarea>
+      <div class="hstack" style="margin-top:14px">
+        <button class="btn ghost" id="prevBtn">Назад</button>
+        <button class="btn ghost" id="skipBtn">Пропустить</button>
+        <button class="btn primary" id="nextBtn">Далее</button>
+        <div class="small" style="margin-left:auto;padding-top:12px"><b id="timer">00:00</b></div>
+      </div>
+    </section>
+
+    <section id="resultPage" class="card hidden" style="grid-column:1/-1">
+      <div class="section-title"><h2 style="margin:0">Результат</h2><span class="pill">Done</span></div>
+      <div class="kpi">
+        <div class="card soft"><div class="small">Кандидат</div><div class="v" id="rCandidate">—</div></div>
+        <div class="card soft"><div class="small">Баллы</div><div class="v" id="rScore">0 / 0</div></div>
+        <div class="card soft"><div class="small">Процент</div><div class="v" id="rPct">0%</div></div>
+      </div>
+      <div style="overflow:auto;margin-top:16px;max-height:560px">
+        <table>
+          <thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th><th>Время</th></tr></thead>
+          <tbody id="resultTbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+const INTRO = "Добрый день!\n\nСпасибо за ваш отклик!\n\nСледующий этап — тестирование. На его выполнение обычно уходит около 60 минут, поэтому рекомендуем заранее выделить это время и выбрать спокойное место, где вас никто и ничто не будет отвлекать.\n\nВ тесте есть вопросы с выбором ответа, открытые вопросы и задачи. На вопросы с выбором ответа отводится до 2 минут, на открытые вопросы — до 6 минут, на задачи — до 15 минут.\n\nПросим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач.\n\nНе переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.\n\nЖелаем удачи! 🍀\nБудем рады познакомиться с вашим подходом в рамках тестирования и, если все сложится, встретиться с вами на очном интервью.";
+let MCQ = [{"id": 1, "block": "Экономика", "type": "single", "question": "Мировая экономика — это:", "options": ["сфера устойчивых товарно-денежных отношений между странами, основанная на международном разделении труда", "система кредитных отношений между странами", "совокупность национальных экономик стран мира, связанных между собой обменом товаров, услуг и движением факторов производства", "объединение стран в международные экономические организации"], "correctLetters": ["c"], "timeLimit": 120}];
+let OPEN = [{"id": "O1", "block": "Открытые вопросы", "type": "open", "question": "Как много пива выпито в Москве за прошлую неделю?", "timeLimit": 360}];
+let DEMO = [{"id": 1, "block": "Экономика", "type": "single", "question": "Мировая экономика — это:", "options": ["сфера устойчивых товарно-денежных отношений между странами, основанная на международном разделении труда", "система кредитных отношений между странами", "совокупность национальных экономик стран мира, связанных между собой обменом товаров, услуг и движением факторов производства", "объединение стран в международные экономические организации"], "correctLetters": ["c"], "timeLimit": 120}];
+let mode = 'demo';
+let data = [];
+let idx = 0;
+let timer = null;
+let remaining = 0;
+let answers = [];
+let results = [];
+let theme = 'light';
+const L = ['a','b','c','d','e','f'];
+const el = id => document.getElementById(id);
+function chooseData() { data = mode === 'demo' ? DEMO : [...MCQ, ...OPEN]; el('modePill').textContent = mode === 'demo' ? 'Demo' : 'Full'; updateKpis(); }
+function updateKpis() { const all = mode === 'demo' ? DEMO : [...MCQ, ...OPEN]; el('kEco').textContent = all.filter(q => q.block === 'Экономика').length; el('kFin').textContent = all.filter(q => q.block === 'Финансы').length; el('kMar').textContent = all.filter(q => q.block === 'Маркетинг').length; }
+function fmt(s) { s = Math.max(0, s); return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+function secFor(q) { if(q.type === 'open') return 360; if(q.type === 'task') return 900; return 120; }
+function scoreNow() { let c = 0; for (let i = 0; i < answers.length; i++) { const q = data[i]; if (!q) continue; if (q.type === 'open' || q.type === 'task') continue; const sel = (answers[i] || []).slice().sort().join('|'); const cor = (q.correctLetters || []).slice().sort().join('|'); if (sel === cor) c++; } return c; }
+function start() { chooseData(); idx = 0; answers = []; results = []; el('startPage').classList.add('hidden'); el('resultPage').classList.add('hidden'); el('testPage').classList.remove('hidden'); render(); }
+function render() { clearInterval(timer); const q = data[idx]; if (!q) { finish(); return; } remaining = secFor(q); el('questionMeta').textContent = `${q.block} · Вопрос ${idx+1} из ${data.length}`; el('qText').textContent = q.question; el('bar').style.width = ((idx) / data.length * 100) + '%'; el('timer').textContent = fmt(remaining); el('openAnswer').classList.toggle('hidden', q.type !== 'open' && q.type !== 'task'); el('options').innerHTML = ''; if(q.type === 'open' || q.type === 'task') { el('openAnswer').value = (answers[idx] && answers[idx].text) || ''; } else { q.options.forEach((o, i) => { const letter = L[i]; const d = document.createElement('div'); d.className = 'opt' + (((answers[idx] || []).includes(letter)) ? ' sel' : ''); d.innerHTML = `<strong>${letter.toUpperCase()}</strong><div>${o}</div>`; d.onclick = () => pick(letter, q.type === 'multi'); el('options').appendChild(d); }); } timer = setInterval(() => { remaining--; el('timer').textContent = fmt(remaining); if(remaining <= 0) next(); }, 1000); }
+function pick(letter, multi) { if (!answers[idx] || Array.isArray(answers[idx]) === false) answers[idx] = []; if (multi) { answers[idx] = answers[idx].includes(letter) ? answers[idx].filter(x => x !== letter) : [...answers[idx], letter]; } else { answers[idx] = [letter]; } render(); }
+function next() { clearInterval(timer); const q = data[idx]; if(q.type === 'open' || q.type === 'task') { answers[idx] = {text: el('openAnswer').value || ''}; } if(idx < data.length - 1) { idx++; render(); } else finish(); }
+function prev() { if(idx === 0) return; idx--; render(); }
+function finish() { clearInterval(timer); el('testPage').classList.add('hidden'); el('resultPage').classList.remove('hidden'); const fio = el('fio').value.trim() || 'Без имени'; const email = el('email').value.trim() || '—'; const score = scoreNow(); const total = MCQ.length; const pct = total ? Math.round(score / total * 100) : 0; el('rCandidate').textContent = `${fio} · ${email}`; el('rScore').textContent = `${score} / ${total}`; el('rPct').textContent = `${pct}%`; const tb = el('resultTbody'); tb.innerHTML = ''; data.forEach((q, i) => { const ans = answers[i]; let answerText = ''; if(q.type === 'open' || q.type === 'task') answerText = (ans && ans.text) || '—'; else answerText = ((ans || []).join('|') || '—'); const correctText = q.correctLetters ? q.correctLetters.join('|') : '—'; const ok = q.type === 'open' || q.type === 'task' ? 'На проверке' : (((ans || []).slice().sort().join('|') === (q.correctLetters || []).slice().sort().join('|')) ? 'Верно' : 'Неверно'); const cls = ok === 'Верно' ? 'color:#2c7a3f;font-weight:800' : (ok === 'Неверно' ? 'color:#a12c7b;font-weight:800' : 'color:#00519A;font-weight:800'); const tr = document.createElement('tr'); tr.innerHTML = `<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${answerText}</td><td>${correctText}</td><td style="${cls}">${ok}</td><td>${secFor(q)}</td>`; tb.appendChild(tr); }); results.push({date:new Date().toISOString(),fio,email,score,total,pct,answers,mode}); }
+function csv() { if(!results.length) { alert('Сначала завершите тест'); return; } const r = results[results.length - 1]; const rows = [['date','fio','email','mode','score','total','percent']]; rows.push([r.date,r.fio,r.email,r.mode,r.score,r.total,r.pct]); const csv = rows.map(row => row.map(v => '"' + String(v ?? '').replace(/"/g,'""') + '"').join(',')).join('
+'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'})); a.download = 'test-results.csv'; a.click(); }
+function themeSwitch() { theme = theme === 'light' ? 'dark' : 'light'; document.documentElement.style.setProperty('--bg', theme === 'dark' ? '#10181d' : '#f5fafb'); document.documentElement.style.setProperty('--surface', theme === 'dark' ? '#162229' : '#ffffff'); document.documentElement.style.setProperty('--surface2', theme === 'dark' ? '#122027' : '#f3f8fa'); document.documentElement.style.setProperty('--text', theme === 'dark' ? '#e9f0f3' : '#17303d'); document.documentElement.style.setProperty('--muted', theme === 'dark' ? '#8aa0ad' : '#5d7482'); document.documentElement.style.setProperty('--border', theme === 'dark' ? '#22333c' : '#dbe7ee'); }
+el('startBtn').onclick = start; el('nextBtn').onclick = next; el('prevBtn').onclick = prev; el('skipBtn').onclick = next; el('csvBtn').onclick = csv; el('themeBtn').onclick = themeSwitch; chooseData();
+</script>
+</body>
+</html>
