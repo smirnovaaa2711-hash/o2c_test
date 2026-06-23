@@ -5,57 +5,287 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HR Test Platform</title>
 <style>
-:root{--mint:#00c8ab;--ocean:#00519a;--bg:#f5fafb;--surface:#fff;--surface2:#f3f8fa;--text:#17303d;--muted:#5d7482;--border:#dbe7ee;--shadow:0 10px 28px rgba(2,30,40,.08)}
-*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#eef9f7 0%,var(--bg) 36%);color:var(--text)}body{min-height:100vh}.wrap{max-width:1160px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,var(--ocean),#0a6db0 55%,var(--mint));color:#fff;padding:34px 0 40px;box-shadow:var(--shadow)}.hero h1{margin:10px 0 8px;font-size:clamp(28px,4vw,44px)}.hero p{margin:0;max-width:900px;opacity:.96}.badge{display:inline-flex;background:rgba(255,255,255,.15);padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px}.grid{display:grid;grid-template-columns:320px 1fr;gap:20px;margin-top:-34px}.toprow{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:20px}.soft{background:var(--surface2)}.btn{border:none;border-radius:12px;padding:14px 18px;font-weight:800;cursor:pointer}.primary{background:var(--mint);color:#053e38}.secondary{background:#eaf3f8;color:var(--ocean)}input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);font:inherit;max-width:none;max-height:none}label{display:block;font-weight:700;margin-bottom:8px}.small{color:var(--muted);font-size:14px}.hidden{display:none !important}.progress{height:10px;background:#e8f1f4;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:var(--mint);width:0%}.opt{display:flex;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;margin-top:10px;background:#fff;cursor:pointer}.opt.sel{border-color:var(--ocean);box-shadow:0 0 0 3px rgba(0,81,154,.08)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}@media(max-width:960px){.grid{grid-template-columns:1fr}}
+:root{
+  --mint:#00c8ab;
+  --ocean:#00519a;
+  --bg:#f5fafb;
+  --surface:#fff;
+  --surface2:#f3f8fa;
+  --text:#17303d;
+  --muted:#5d7482;
+  --border:#dbe7ee;
+  --shadow:0 10px 28px rgba(2,30,40,.08);
+  --ok:#0b8f5a;
+  --bad:#c0392b;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(180deg,#eef9f7 0%,var(--bg) 36%);
+  color:var(--text)
+}
+body{min-height:100vh}
+.wrap{
+  max-width:1160px;
+  margin:0 auto;
+  padding:24px
+}
+.hero{
+  background:linear-gradient(135deg,var(--ocean),#0a6db0 55%,var(--mint));
+  color:#fff;
+  padding:34px 0 40px;
+  box-shadow:var(--shadow)
+}
+.hero h1{
+  margin:10px 0 8px;
+  font-size:clamp(28px,4vw,44px)
+}
+.badge{
+  display:inline-flex;
+  background:rgba(255,255,255,.15);
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:13px
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:20px
+}
+.soft{background:var(--surface2)}
+.toprow{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:20px;
+  align-items:start;
+  margin-top:-34px
+}
+.btn{
+  border:none;
+  border-radius:14px;
+  padding:14px 18px;
+  font-weight:800;
+  cursor:pointer
+}
+.primary{background:var(--mint);color:#053e38}
+.secondary{background:#eaf3f8;color:var(--ocean)}
+input,textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  font:inherit;
+  background:#fff
+}
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:8px
+}
+.small{color:var(--muted);font-size:14px}
+.hidden{display:none !important}
+.progress{
+  height:10px;
+  background:#e8f1f4;
+  border-radius:999px;
+  overflow:hidden
+}
+.progress span{
+  display:block;
+  height:100%;
+  background:var(--mint);
+  width:0%
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px
+}
+th,td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  vertical-align:top
+}
+@media(max-width:960px){
+  .toprow{grid-template-columns:1fr}
+}
+
+.opts{margin-top:12px;display:grid;gap:10px}
+.opt{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:16px 18px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+  cursor:pointer;
+  transition:.18s ease;
+  user-select:none
+}
+.opt:hover{
+  border-color:#b9d4e4;
+  box-shadow:0 8px 20px rgba(2,30,40,.05)
+}
+.opt.sel{
+  border-color:var(--ocean);
+  background:#f4f9ff;
+  box-shadow:0 0 0 3px rgba(0,81,154,.08)
+}
+.optMark{
+  width:22px;
+  height:22px;
+  border-radius:999px;
+  border:2px solid #b5c5d1;
+  background:#fff;
+  flex:0 0 auto;
+  margin-top:2px;
+  position:relative;
+  transition:.18s ease
+}
+.opt.sel .optMark{
+  border-color:var(--ocean);
+  background:var(--ocean)
+}
+.opt.sel .optMark:after{
+  content:'';
+  position:absolute;
+  left:6px;
+  top:2px;
+  width:6px;
+  height:12px;
+  border:solid #fff;
+  border-width:0 3px 3px 0;
+  transform:rotate(45deg)
+}
+.optText{
+  flex:1;
+  min-width:0;
+  line-height:1.25;
+  font-size:16px
+}
+.optLetter{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#eef5f8;
+  color:var(--ocean);
+  font-weight:900;
+  margin-right:10px;
+  flex:0 0 auto
+}
+.adminLink{
+  color:var(--ocean);
+  text-decoration:none;
+  font-weight:800
+}
+.adminLink:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<header class="hero"><div class="wrap"><div class="badge">Test Platform</div><h1>Платформа тестирования кандидатов</h1><div class="card soft" style="margin-top:16px;background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.18)"><h2 style="margin:0 0 8px">Приветственное письмо</h2><div style="line-height:1.6">Добрый день!<br><br>Спасибо за ваш отклик!<br><br>Первым этапом нашего отбора является тестирование. Чтобы пройти его максимально комфортно, рекомендуем заранее выделить время и выбрать место, где вас ничего не будет отвлекать. Тест состоит из четырех блоков: «Экономика», «Финансы и инвестиции», «Основы маркетинга» и открытые вопросы на логику.<br><br>В первых трех разделах вам предстоит ответить на вопросы с вариантами ответов. В разделах «Экономика» и «Финансы и инвестиции» для каждого вопроса предусмотрен один правильный ответ, а в разделе «Основы маркетинга» может быть несколько правильных вариантов. На каждый вопрос отводится до 2 минут. В блоке с открытыми вопросами на первые 13 вопросов отводится до 7 минут, на вопросы с 14-31 до 4 минут. На решение каждой открытой задачи предусмотрено до 15 минут.<br><br>Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач. Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.<br><br>Желаем удачи! 🍀<br>Будем рады познакомиться с вашим подходом в рамках тестирования и встретиться на очном интервью!</div></div></div></header>
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">Test Platform</div>
+    <h1>Платформа тестирования кандидатов</h1>
+    <div class="card soft" style="margin-top:16px;background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.18)">
+      <h2 style="margin:0 0 8px">Приветственное письмо</h2>
+      <div style="line-height:1.6">
+        Добрый день!<br><br>
+        Спасибо за ваш отклик!<br><br>
+        Первым этапом нашего отбора является тестирование. Чтобы пройти его максимально комфортно, рекомендуем заранее выделить время и выбрать место, где вас ничего не будет отвлекать. Тест состоит из четырех блоков: «Экономика», «Финансы и инвестиции», «Основы маркетинга» и открытые вопросы на логику.<br><br>
+        В первых трех разделах вам предстоит ответить на вопросы с вариантами ответов. В разделах «Экономика» и «Финансы и инвестиции» для каждого вопроса предусмотрен один правильный ответ, а в разделе «Основы маркетинга» может быть несколько правильных вариантов. На каждый вопрос отводится до 2 минут. В блоке с открытыми вопросами на первые 13 вопросов отводится до 7 минут, на вопросы с 14-31 до 4 минут. На решение каждой открытой задачи предусмотрено до 15 минут.<br><br>
+        Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач. Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.<br><br>
+        Желаем удачи! 🍀<br>
+        Будем рады познакомиться с вашим подходом в рамках тестирования и встретиться на очном интервью!
+      </div>
+    </div>
+  </div>
+</header>
+
 <main class="wrap">
-<div class="toprow" id="introRow">
-<aside class="card" id="candidateCard">
-<h2 style="margin-top:0">Форма кандидата</h2>
-<label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
-<label>Email<input id="email" placeholder="Введите email" required></label>
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px"><button type="button" class="btn primary" id="startBtn">Начать тест</button></div>
-</aside>
-<section class="card" id="welcomeCard">
-<h2 style="margin-top:0">Приветственное письмо</h2>
-<div style="line-height:1.6">Добрый день!<br><br>Спасибо за ваш отклик!<br><br>Первым этапом нашего отбора является тестирование. Чтобы пройти его максимально комфортно, рекомендуем заранее выделить время и выбрать место, где вас ничего не будет отвлекать. Тест состоит из четырех блоков: «Экономика», «Финансы и инвестиции», «Основы маркетинга» и открытые вопросы на логику.<br><br>В первых трех разделах вам предстоит ответить на вопросы с вариантами ответов. В разделах «Экономика» и «Финансы и инвестиции» для каждого вопроса предусмотрен один правильный ответ, а в разделе «Основы маркетинга» может быть несколько правильных вариантов. На каждый вопрос отводится до 2 минут. В блоке с открытыми вопросами на первые 13 вопросов отводится до 7 минут, на вопросы с 14-31 до 4 минут. На решение каждой открытой задачи предусмотрено до 15 минут.<br><br>Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач. Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.<br><br>Желаем удачи! 🍀<br>Будем рады познакомиться с вашим подходом в рамках тестирования и встретиться на очном интервью!</div>
-</section>
-</div>
-<section class="card" id="adminCard" style="margin-top:20px">
-<h2 style="margin-top:0">Админ-панель</h2>
-<label>Пароль<input id="adminPass" type="password" placeholder="Введите пароль"></label>
-<button type="button" class="btn secondary" id="adminLoginBtn">Войти</button>
-<div class="small" style="margin-top:10px">Все ответы сохраняются здесь.</div>
-<div id="adminStatus" style="margin-top:12px"></div>
-</section>
-<section class="card hidden" id="testCard" style="grid-column:1/-1">
-<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><h2 style="margin:0">Тестирование</h2><div class="small" id="meta"></div></div>
-<div class="progress" style="margin-top:12px"><span id="bar"></span></div>
-<h3 id="qText" style="margin:16px 0 0"></h3>
-<div id="opts" style="margin-top:10px"></div>
-<textarea id="openAnswer" rows="6" class="hidden" placeholder="Введите ответ" style="margin-top:14px"></textarea>
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center"><button type="button" class="btn secondary" id="prevBtn">Назад</button><button type="button" class="btn primary" id="nextBtn">Далее</button><div class="small" style="margin-left:auto"><b id="timer">00:00</b></div></div>
-</section>
-<section class="card hidden" id="resultCard" style="grid-column:1/-1">
-<h2 style="margin-top:0">Результат</h2>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-<div class="card soft"><div class="small">Кандидат</div><div id="rCand" style="font-size:28px;font-weight:900;margin-top:6px">—</div></div>
-<div class="card soft"><div class="small">Баллы</div><div id="rScore" style="font-size:28px;font-weight:900;margin-top:6px">0 / 0</div></div>
-<div class="card soft"><div class="small">Процент</div><div id="rPct" style="font-size:28px;font-weight:900;margin-top:6px">0%</div></div>
-</div>
-<div style="overflow:auto;margin-top:16px;max-height:560px"><table><thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead><tbody id="tb"></tbody></table></div>
-</section>
-<section class="card hidden" id="extraTasksBlock" style="grid-column:1/-1;margin-top:12px">
-<h2 style="margin-top:0">Дополнительные задания</h2>
-<div class="card soft" style="margin-top:12px"><b>Задание №1.</b> Интернет-магазин Абибас имеет проблемы с поисковой строкой на собственном сайте: она выдает ошибки, неполные результаты и неверные подсказки. Вы – скаут команды Абибас. Ваша задача – сделать подборку из 10-12 конкретных готовых (или почти готовых) продуктов, решающих эту проблему, и выбрать 2-3 оптимальных, чтобы представить их руководству (принцип выбора должен быть понятен). География продуктов-решений не имеет значения. Все предпосылки относительно компании Абибас придумайте сами.</div>
-<div class="card soft" style="margin-top:12px"><b>Задание №2.</b> В Вашу компанию обратился инвестор, который хочет вложить деньги в проект по строительству завода по рыбопереработке в Московской области. До встречи с инвестором немного времени и руководитель просит подготовить Вас короткую первичную справку на 1-2 страницы о том, целесообразно ли создавать новое производство на этом рынке.</div>
-<div class="card soft" style="margin-top:12px"><b>Задание №3.</b> ОАО «Аэрофлот» обратилось в Вашу Компанию с запросом на разработку программы инновационного развития (ПИР).<br><br><b>Задачи</b><br>1. Дать краткое описание ПИР своими словами, перечислить 1-2 нормативных документа, регулирующих разработку ПИР для акционерных обществ с госучастием и дать на них ссылку.<br>2. Переслать схему документа ПИР.<br>3. Выбрать несколько компаний-аналогов ОАО "Аэрофлот" для сравнения с целью выявления лучших практик ведения бизнеса. Тезисно описать принципы выбора и сравнения компаний.</div>
-</section>
-</div>
+  <div class="toprow" id="introRow">
+    <aside class="card" id="candidateCard">
+      <h2 style="margin-top:0">Форма кандидата</h2>
+      <label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
+      <label>Email<input id="email" placeholder="Введите email" required></label>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+        <button type="button" class="btn primary" id="startBtn">Начать тест</button>
+      </div>
+    </aside>
+
+    <section class="card" id="welcomeCard">
+      <h2 style="margin-top:0">Приветственное письмо</h2>
+      <div style="line-height:1.6">
+        Добрый день!<br><br>
+        Спасибо за ваш отклик!<br><br>
+        Первым этапом нашего отбора является тестирование. Чтобы пройти его максимально комфортно, рекомендуем заранее выделить время и выбрать место, где вас ничего не будет отвлекать. Тест состоит из четырех блоков: «Экономика», «Финансы и инвестиции», «Основы маркетинга» и открытые вопросы на логику.<br><br>
+        В первых трех разделах вам предстоит ответить на вопросы с вариантами ответов. В разделах «Экономика» и «Финансы и инвестиции» для каждого вопроса предусмотрен один правильный ответ, а в разделе «Основы маркетинга» может быть несколько правильных вариантов. На каждый вопрос отводится до 2 минут. В блоке с открытыми вопросами на первые 13 вопросов отводится до 7 минут, на вопросы с 14-31 до 4 минут. На решение каждой открытой задачи предусмотрено до 15 минут.<br><br>
+        Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач. Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.<br><br>
+        Желаем удачи! 🍀<br>
+        Будем рады познакомиться с вашим подходом в рамках тестирования и встретиться на очном интервью!
+      </div>
+    </section>
+  </div>
+
+  <section class="card" id="adminCard" style="margin-top:20px">
+    <h2 style="margin-top:0">Админ-панель</h2>
+    <label>Пароль<input id="adminPass" type="password" placeholder="Введите пароль"></label>
+    <button type="button" class="btn secondary" id="adminLoginBtn">Войти</button>
+    <div class="small" style="margin-top:10px">Все ответы сохраняются здесь.</div>
+    <div id="adminStatus" style="margin-top:12px"></div>
+  </section>
+
+  <section class="card hidden" id="testCard" style="grid-column:1/-1">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+      <h2 style="margin:0">Тестирование</h2>
+      <div class="small" id="meta"></div>
+    </div>
+    <div class="progress" style="margin-top:12px"><span id="bar"></span></div>
+    <h3 id="qText" style="margin:16px 0 0"></h3>
+    <div id="opts" class="opts"></div>
+    <textarea id="openAnswer" rows="6" class="hidden" placeholder="Введите ответ" style="margin-top:14px"></textarea>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
+      <button type="button" class="btn secondary" id="prevBtn">Назад</button>
+      <button type="button" class="btn primary" id="nextBtn">Далее</button>
+      <div class="small" style="margin-left:auto"><b id="timer">00:00</b></div>
+    </div>
+  </section>
+
+  <section class="card hidden" id="resultCard" style="grid-column:1/-1">
+    <h2 style="margin-top:0">Результат</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div class="card soft"><div class="small">Кандидат</div><div id="rCand" style="font-size:28px;font-weight:900;margin-top:6px">—</div></div>
+      <div class="card soft"><div class="small">Баллы</div><div id="rScore" style="font-size:28px;font-weight:900;margin-top:6px">0 / 0</div></div>
+      <div class="card soft"><div class="small">Процент</div><div id="rPct" style="font-size:28px;font-weight:900;margin-top:6px">0%</div></div>
+    </div>
+    <div style="overflow:auto;margin-top:16px;max-height:560px">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card hidden" id="extraTasksBlock" style="grid-column:1/-1;margin-top:12px">
+    <h2 style="margin-top:0">Дополнительные задания</h2>
+    <div class="card soft" style="margin-top:12px"><b>Задание №1.</b> Интернет-магазин Абибас имеет проблемы с поисковой строкой на собственном сайте: она выдает ошибки, неполные результаты и неверные подсказки. Вы – скаут команды Абибас. Ваша задача – сделать подборку из 10-12 конкретных готовых (или почти готовых) продуктов, решающих эту проблему, и выбрать 2-3 оптимальных, чтобы представить их руководству (принцип выбора должен быть понятен). География продуктов-решений не имеет значения. Все предпосылки относительно компании Абибас придумайте сами.</div>
+    <div class="card soft" style="margin-top:12px"><b>Задание №2.</b> В Вашу компанию обратился инвестор, который хочет вложить деньги в проект по строительству завода по рыбопереработке в Московской области. До встречи с инвестором немного времени и руководитель просит подготовить Вас короткую первичную справку на 1-2 страницы о том, целесообразно ли создавать новое производство на этом рынке.</div>
+    <div class="card soft" style="margin-top:12px"><b>Задание №3.</b> ОАО «Аэрофлот» обратилось в Вашу Компанию с запросом на разработку программы инновационного развития (ПИР).<br><br><b>Задачи</b><br>1. Дать краткое описание ПИР своими словами, перечислить 1-2 нормативных документа, регулирующих разработку ПИР для акционерных обществ с госучастием и дать на них ссылку.<br>2. Переслать схему документа ПИР.<br>3. Выбрать несколько компаний-аналогов ОАО "Аэрофлот" для сравнения с целью выявления лучших практик ведения бизнеса. Тезисно описать принципы выбора и сравнения компаний.</div>
+  </section>
 </main>
+
 <script>
 const DATA = [
 {block:'Экономика',type:'single',question:'Мировая экономика — это:',options:['сфера устойчивых товарно-денежных отношений между странами, основанная на международном разделении труда','система кредитных отношений между странами','совокупность национальных экономик стран мира, связанных между собой обменом товаров, услуг и движением факторов производства','объединение стран в международные экономические организации'],correct:['c']},
@@ -177,21 +407,232 @@ const DATA = [
 {block:'Открытые вопросы',type:'open',question:'Назовите самую большую артерию человека',time:240},
 {block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',time:240}
 ];
-const L=['a','b','c','d','e','f'];let idx=0,timer=null,remaining=0,answers=[],remainingByQ={},currentFio='';const el=id=>document.getElementById(id);
-function fmt(s){s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function secFor(q){return q.type==='open'?q.time||240:120}
-function loadRuns(){try{return JSON.parse(localStorage.getItem('hr_test_runs')||'[]')}catch(e){return []}}
-function saveRuns(runs){localStorage.setItem('hr_test_runs',JSON.stringify(runs))}
-function start(){const fio=el('fio').value.trim(),email=el('email').value.trim();if(!fio||!email){alert('Пожалуйста, заполните ФИО и Email.');return}answers=DATA.map(()=>null);remainingByQ={};idx=0;currentFio=fio;el('candidateCard').classList.add('hidden');el('welcomeCard').classList.add('hidden');el('adminCard').classList.add('hidden');el('introRow').classList.add('hidden');el('testCard').classList.remove('hidden');el('resultCard').classList.add('hidden');el('extraTasksBlock').classList.add('hidden');render()}
-function render(){clearInterval(timer);const q=DATA[idx];if(!q){finish();return}remaining=(remainingByQ[idx]!=null?remainingByQ[idx]:secFor(q));const blockTotal=DATA.filter(x=>x.block===q.block).length;const blockIndex=DATA.slice(0,idx+1).filter(x=>x.block===q.block).length;el('meta').textContent=`${q.block} · Вопрос ${blockIndex} из ${blockTotal}`;el('qText').textContent=q.question;el('bar').style.width=((idx+1)/DATA.length*100)+'%';el('timer').textContent=fmt(remaining);el('opts').innerHTML='';el('openAnswer').classList.toggle('hidden',q.type!=='open');if(q.type==='open'){el('openAnswer').value=answers[idx]?.text||''}else{const chosen=answers[idx]||[];q.options.forEach((o,i)=>{const letter=L[i];const selected=chosen.includes(letter);const d=document.createElement('div');d.className='opt'+(selected?' sel':'');d.innerHTML=`<input type="checkbox" ${selected?'checked':''} style="margin-top:3px"><strong>${letter.toUpperCase()}</strong><div>${o}</div>`;d.onclick=()=>toggle(letter);el('opts').appendChild(d)});const has=chosen.length>0;if(has){const ok=JSON.stringify(chosen.slice().sort())===JSON.stringify((q.correct||[]).slice().sort());const msg=document.createElement('div');msg.style.marginTop='10px';msg.style.fontWeight='800';msg.style.color=ok?'#0b8f5a':'#c0392b';msg.textContent=ok?'Ответ верный':'Ответ неверный';el('opts').appendChild(msg)}}timer=setInterval(()=>{remaining--;el('timer').textContent=fmt(remaining);remainingByQ[idx]=remaining;if(remaining<=0)next()},1000)}
-function toggle(letter){const q=DATA[idx];const cur=new Set(answers[idx]||[]);if(cur.has(letter)) cur.delete(letter); else if(q.type==='single'){cur.clear(); cur.add(letter)} else cur.add(letter); answers[idx]=Array.from(cur); render()}
-function pick(letter){toggle(letter)}
-function next(){clearInterval(timer);const q=DATA[idx];if(q.type==='open'){const v=el('openAnswer').value.trim();if(!v){alert('Ответ обязателен.');render();return}answers[idx]={text:v}}else{if(!(answers[idx]&&answers[idx].length)){alert('Выберите ответ.');render();return}}remainingByQ[idx]=remaining;if(idx<DATA.length-1){idx++;render()}else finish()}
-function prev(){if(idx>0){remainingByQ[idx]=remaining;idx--;render()}}
-function finish(){clearInterval(timer);el('testCard').classList.add('hidden');el('resultCard').classList.remove('hidden');el('extraTasksBlock').classList.add('hidden');const fio=currentFio||el('fio').value.trim()||'Без имени';const candScore=DATA.filter((q,i)=>q.type!=='open'&&JSON.stringify((answers[i]||[]).slice().sort())===JSON.stringify((q.correct||[]).slice().sort())).length;const total=DATA.filter(q=>q.type!=='open').length;const pct=total?Math.round(candScore/total*100):0;el('rCand').textContent=fio;el('rScore').textContent=`${candScore} / ${total}`;el('rPct').textContent=`${pct}%`;const tb=el('tb');tb.innerHTML='';const run={fio,email:el('email').value.trim(),date:new Date().toISOString(),score:candScore,total,pct,answers:DATA.map((q,i)=>({block:q.block,question:q.question,answer:q.type==='open'?((answers[i]&&answers[i].text)||''):(answers[i]||[]).join('|'),correct:q.correct?q.correct.join('|'):'—',status:q.type==='open'?'На проверке':(((answers[i]||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно')}))};const runs=loadRuns();runs.unshift(run);saveRuns(runs.slice(0,100));DATA.forEach((q,i)=>{const ans=answers[i];const ansText=q.type==='open'?((ans&&ans.text)||'—'):((ans||[]).join('|')||'—');const corText=q.correct?q.correct.join('|'):'—';const ok=q.type==='open'?'На проверке':(((ans||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно');const tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;tb.appendChild(tr)})}
-function adminLogin(){const pass=el('adminPass').value.trim();if(pass!=='klepa13412'){el('adminStatus').textContent='Неверный пароль';return}const runs=loadRuns();const rows=runs.map((r,i)=>`<tr><td>${i+1}</td><td><a href="#" class="runLink" data-idx="${i}">${r.fio}</a></td><td>${r.pct}%</td><td>${new Date(r.date).toLocaleString('ru-RU')}</td></tr>`).join('');el('adminStatus').innerHTML=`<div class='small'>Пароль верный. Нажмите на ФИО, чтобы открыть результаты.</div><div style='overflow:auto;max-height:420px;margin-top:10px'><table><thead><tr><th>#</th><th>ФИО</th><th>Процент</th><th>Дата</th></tr></thead><tbody>${rows}</tbody></table></div><div id="adminRunDetail" style="margin-top:14px"></div>`;document.querySelectorAll('.runLink').forEach(a=>a.onclick=(e)=>{e.preventDefault();showRun(Number(a.dataset.idx))})}
-function showRun(i){const r=loadRuns()[i];if(!r)return;const d=el('adminRunDetail');if(!d)return;d.innerHTML=`<h3 style="margin:0 0 10px">${r.fio}</h3><div class="small">Email: ${r.email||'—'}<br>Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>Баллы: ${r.score} / ${r.total} (${r.pct}%)</div><div style="overflow:auto;max-height:420px;margin-top:12px"><table><thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead><tbody>${r.answers.map((x,idx)=>`<tr><td>${idx+1}</td><td>${x.block}</td><td>${x.question}</td><td>${x.answer||'—'}</td><td>${x.correct}</td><td>${x.status}</td></tr>`).join('')}</tbody></table></div>`}
-window.addEventListener('DOMContentLoaded',()=>{el('startBtn').onclick=start;el('nextBtn').onclick=next;el('prevBtn').onclick=prev;el('adminLoginBtn').onclick=adminLogin});
+
+const letters = ['a','b','c','d','e','f'];
+let idx = 0;
+let timer = null;
+let remaining = 0;
+let answers = [];
+let remainingByQ = {};
+let currentFio = '';
+
+const el = id => document.getElementById(id);
+
+function fmt(s){
+  s = Math.max(0,s);
+  return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+}
+function secFor(q){ return q.type === 'open' ? (q.time || 240) : 120; }
+function loadRuns(){ try { return JSON.parse(localStorage.getItem('hr_test_runs') || '[]'); } catch(e){ return []; } }
+function saveRuns(runs){ localStorage.setItem('hr_test_runs', JSON.stringify(runs)); }
+
+function start(){
+  const fio = el('fio').value.trim();
+  const email = el('email').value.trim();
+  if(!fio || !email){ alert('Пожалуйста, заполните ФИО и Email.'); return; }
+  answers = DATA.map(() => null);
+  remainingByQ = {};
+  idx = 0;
+  currentFio = fio;
+  el('candidateCard').classList.add('hidden');
+  el('welcomeCard').classList.add('hidden');
+  el('adminCard').classList.add('hidden');
+  el('introRow').classList.add('hidden');
+  el('testCard').classList.remove('hidden');
+  el('resultCard').classList.add('hidden');
+  el('extraTasksBlock').classList.add('hidden');
+  render();
+}
+
+function render(){
+  clearInterval(timer);
+  const q = DATA[idx];
+  if(!q){ finish(); return; }
+
+  remaining = (remainingByQ[idx] != null ? remainingByQ[idx] : secFor(q));
+  const blockTotal = DATA.filter(x => x.block === q.block).length;
+  const blockIndex = DATA.slice(0, idx + 1).filter(x => x.block === q.block).length;
+
+  el('meta').textContent = `${q.block} · Вопрос ${blockIndex} из ${blockTotal}`;
+  el('qText').textContent = q.question;
+  el('bar').style.width = (((idx + 1) / DATA.length) * 100) + '%';
+  el('timer').textContent = fmt(remaining);
+
+  const opts = el('opts');
+  opts.innerHTML = '';
+  el('openAnswer').classList.toggle('hidden', q.type !== 'open');
+
+  if(q.type === 'open'){
+    el('openAnswer').value = answers[idx]?.text || '';
+  }else{
+    const chosen = answers[idx] || [];
+    q.options.forEach((o, i) => {
+      const letter = letters[i];
+      const selected = chosen.includes(letter);
+      const d = document.createElement('div');
+      d.className = 'opt' + (selected ? ' sel' : '');
+      d.innerHTML = `
+        <div class="optMark"></div>
+        <div class="optText"><span class="optLetter">${letter.toUpperCase()}</span>${o}</div>
+      `;
+      d.onclick = () => toggle(letter);
+      opts.appendChild(d);
+    });
+  }
+
+  timer = setInterval(() => {
+    remaining--;
+    el('timer').textContent = fmt(remaining);
+    remainingByQ[idx] = remaining;
+    if(remaining <= 0) next();
+  }, 1000);
+}
+
+function toggle(letter){
+  const q = DATA[idx];
+  const cur = new Set(answers[idx] || []);
+  if(cur.has(letter)) cur.delete(letter);
+  else if(q.type === 'single'){ cur.clear(); cur.add(letter); }
+  else cur.add(letter);
+  answers[idx] = Array.from(cur);
+  render();
+}
+
+function next(){
+  clearInterval(timer);
+  const q = DATA[idx];
+  if(q.type === 'open'){
+    const v = el('openAnswer').value.trim();
+    if(!v){ alert('Ответ обязателен.'); render(); return; }
+    answers[idx] = {text:v};
+  }else{
+    if(!(answers[idx] && answers[idx].length)){
+      alert('Выберите ответ.');
+      render();
+      return;
+    }
+  }
+  remainingByQ[idx] = remaining;
+  if(idx < DATA.length - 1){
+    idx++;
+    render();
+  }else{
+    finish();
+  }
+}
+
+function prev(){
+  if(idx > 0){
+    remainingByQ[idx] = remaining;
+    idx--;
+    render();
+  }
+}
+
+function finish(){
+  clearInterval(timer);
+  el('testCard').classList.add('hidden');
+  el('resultCard').classList.remove('hidden');
+  el('extraTasksBlock').classList.remove('hidden');
+
+  const fio = currentFio || el('fio').value.trim() || 'Без имени';
+  const candScore = DATA.filter((q,i)=> q.type !== 'open' &&
+    JSON.stringify((answers[i] || []).slice().sort()) === JSON.stringify((q.correct || []).slice().sort())
+  ).length;
+  const total = DATA.filter(q => q.type !== 'open').length;
+  const pct = total ? Math.round(candScore / total * 100) : 0;
+
+  el('rCand').textContent = fio;
+  el('rScore').textContent = `${candScore} / ${total}`;
+  el('rPct').textContent = `${pct}%`;
+
+  const run = {
+    fio,
+    email: el('email').value.trim(),
+    date: new Date().toISOString(),
+    score: candScore,
+    total,
+    pct,
+    answers: DATA.map((q,i) => ({
+      block:q.block,
+      question:q.question,
+      answer:q.type === 'open' ? ((answers[i] && answers[i].text) || '') : (answers[i] || []).join('|'),
+      correct:q.correct ? q.correct.join('|') : '—',
+      status:q.type === 'open' ? 'На проверке' : (((answers[i] || []).slice().sort().join('|') === (q.correct || []).slice().sort().join('|')) ? 'Верно' : 'Неверно')
+    }))
+  };
+  const runs = loadRuns();
+  runs.unshift(run);
+  saveRuns(runs.slice(0,100));
+
+  const tb = el('tb');
+  tb.innerHTML = '';
+  DATA.forEach((q,i)=>{
+    const ans = answers[i];
+    const ansText = q.type === 'open' ? ((ans && ans.text) || '—') : ((ans || []).join('|') || '—');
+    const corText = q.correct ? q.correct.join('|') : '—';
+    const ok = q.type === 'open' ? 'На проверке' : (((ans || []).slice().sort().join('|') === (q.correct || []).slice().sort().join('|')) ? 'Верно' : 'Неверно');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function adminLogin(){
+  const pass = el('adminPass').value.trim();
+  if(pass !== 'klepa13412'){
+    el('adminStatus').textContent = 'Неверный пароль';
+    return;
+  }
+  const runs = loadRuns();
+  const rows = runs.map((r,i)=>`<tr><td>${i+1}</td><td><a href="#" class="adminLink runLink" data-idx="${i}">${r.fio}</a></td><td>${r.pct}%</td><td>${new Date(r.date).toLocaleString('ru-RU')}</td></tr>`).join('');
+  el('adminStatus').innerHTML = `
+    <div class="small">Пароль верный. Нажмите на ФИО, чтобы открыть результаты.</div>
+    <div style="overflow:auto;max-height:420px;margin-top:10px">
+      <table>
+        <thead><tr><th>#</th><th>ФИО</th><th>Процент</th><th>Дата</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div id="adminRunDetail" style="margin-top:14px"></div>
+  `;
+  document.querySelectorAll('.runLink').forEach(a=>{
+    a.onclick = (e)=>{
+      e.preventDefault();
+      showRun(Number(a.dataset.idx));
+    };
+  });
+}
+
+function showRun(i){
+  const r = loadRuns()[i];
+  if(!r) return;
+  const d = el('adminRunDetail');
+  if(!d) return;
+  d.innerHTML = `
+    <h3 style="margin:0 0 10px">${r.fio}</h3>
+    <div class="small">
+      Email: ${r.email || '—'}<br>
+      Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>
+      Баллы: ${r.score} / ${r.total} (${r.pct}%)
+    </div>
+    <div style="overflow:auto;max-height:420px;margin-top:12px">
+      <table>
+        <thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead>
+        <tbody>
+          ${r.answers.map((x,idx)=>`<tr><td>${idx+1}</td><td>${x.block}</td><td>${x.question}</td><td>${x.answer || '—'}</td><td>${x.correct}</td><td>${x.status}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  el('startBtn').onclick = start;
+  el('nextBtn').onclick = next;
+  el('prevBtn').onclick = prev;
+  el('adminLoginBtn').onclick = adminLogin;
+});
 </script>
 </body>
 </html>
