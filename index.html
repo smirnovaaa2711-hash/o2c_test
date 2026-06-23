@@ -222,6 +222,7 @@ th,td{
         <button type="button" class="btn primary" id="startBtn">Начать тест</button>
       </div>
     </aside>
+  </div>
 
   <section class="card" id="adminCard" style="margin-top:20px">
     <h2 style="margin-top:0">Админ-панель</h2>
@@ -375,9 +376,10 @@ const DATA = [
 {block:'Открытые вопросы',type:'open',question:'После дождя уровень воды в колодце может повыситься. Коля бросает небольшие камешки в колодец, измеряя время их падения, и рассчитывает расстояние до воды по формуле h=5t^2, где h — расстояние в метрах, t — время падения в секундах. До дождя камушки падали 1,6 с. На сколько поднялся уровень воды после дождя, если измеряемое время уменьшилось на 0,2 с?',time:240},
 {block:'Открытые вопросы',type:'open',question:'В понедельник акции компании подорожали на некоторое число процентов, а во вторник подешевели на то же самое число процентов. В результате они стали стоить на 4% дешевле, чем при открытии торгов в понедельник. На сколько процентов подорожали акции компании в понедельник?',time:240},
 {block:'Открытые вопросы',type:'open',question:'Какова в настоящее время ключевая ставка? Что она показывает? Для чего она регулируется?',time:240},
-{block:'Открытые вопросы',type:'open',question:'Какой размер ВВП России за прошлый год? Какой темп роста ВВП за прошлый год?',time:240},
-{block:'Открытые вопросы',type:'open',question:'У каких 5 стран самые крупные ВВП в мире?',time:240},
-{block:'Открытые вопросы',type:'open',question:'Какие 3 самые большие отрасли российской экономики по доходам? по расходам?',time:240},
+{block:'Открытые вопросы',type:'open',question:'Какой размер ВВП России за прошлый год? Какой темп роста ВВП за прошлый год?',time:120},
+{block:'Открытые вопросы',type:'open',question:'У каких 5 стран самые крупные ВВП в мире?',time:120},
+{block:'Открытые вопросы',type:'open',question:'Какие 3 самые большие отрасли российской экономики по доходам? по расходам?',time:120},
+{block:'Открытые вопросы',type:'open',question:'Когда распался СССР и почему? Назовите 2-3 ключевые причины',time:120},
 {block:'Открытые вопросы',type:'open',question:'Перечислите все города-миллионники России',time:120},
 {block:'Открытые вопросы',type:'open',question:'Назовите 5 крупных российских предприятий-экспортеров',time:120},
 {block:'Открытые вопросы',type:'open',question:'Сколько человек побывало на Луне? Кто был первым человеком, побывавшем на Луне?',time:120},
@@ -394,19 +396,10 @@ const DATA = [
 ];
 
 const letters = ['a','b','c','d','e','f'];
-let idx = 0;
-let timer = null;
-let remaining = 0;
-let answers = [];
-let remainingByQ = {};
-let currentFio = '';
-
+let idx = 0, timer = null, remaining = 0, answers = [], remainingByQ = {}, currentFio = '';
 const el = id => document.getElementById(id);
 
-function fmt(s){
-  s = Math.max(0,s);
-  return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
-}
+function fmt(s){ s = Math.max(0,s); return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
 function secFor(q){ return q.type === 'open' ? (q.time || 240) : 120; }
 function loadRuns(){ try { return JSON.parse(localStorage.getItem('hr_test_runs') || '[]'); } catch(e){ return []; } }
 function saveRuns(runs){ localStorage.setItem('hr_test_runs', JSON.stringify(runs)); }
@@ -420,7 +413,6 @@ function start(){
   idx = 0;
   currentFio = fio;
   el('candidateCard').classList.add('hidden');
-  el('welcomeCard').classList.add('hidden');
   el('adminCard').classList.add('hidden');
   el('introRow').classList.add('hidden');
   el('testCard').classList.remove('hidden');
@@ -498,12 +490,8 @@ function next(){
     }
   }
   remainingByQ[idx] = remaining;
-  if(idx < DATA.length - 1){
-    idx++;
-    render();
-  }else{
-    finish();
-  }
+  if(idx < DATA.length - 1){ idx++; render(); }
+  else finish();
 }
 
 function prev(){
