@@ -33,7 +33,7 @@ table { width:100%; border-collapse:collapse; font-size:14px } th,td { padding:1
 </style>
 </head>
 <body>
-<header class="hero"><div class="wrap"><div class="badge">Test Platform</div><h1>Платформа тестирования кандидатов</h1><p>Экономика · Финансы · Маркетинг · Открытые вопросы</p></div></header>
+<header class="hero"><div class="wrap"><div class="badge">Test Platform</div><h1>Платформа тестирования кандидатов</h1><p>Экономика · Финансы и инвестиции · Основы маркетинга · Открытые вопросы на логику</p></div></header>
 <main class="wrap">
   <div class="grid">
     <aside class="card">
@@ -42,26 +42,28 @@ table { width:100%; border-collapse:collapse; font-size:14px } th,td { padding:1
       <label>Email<input id="email" placeholder="Введите email"></label>
       <label>Вход для администратора<input id="adminPass" type="password" placeholder="Вход для администратора"></label>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
-        <button class="btn primary" id="startBtn">Начать тест</button>
+        <button type="button" class="btn primary" id="startBtn">Начать тест</button>
       </div>
       <div class="notice" style="margin-top:16px"><b>Лимиты:</b> 2 минуты на вопросы с выбором, 6 минут на открытые вопросы, 15 минут на задачи.</div>
     </aside>
 
     <section class="card" id="introCard">
       <h2 style="margin-top:0">Инструкция</h2>
-      <div style="white-space:pre-wrap;line-height:1.72">Добрый день!
+      <div style="white-space:pre-wrap;line-height:1.72">Добрый день! 
 
 Спасибо за ваш отклик!
 
-Следующий этап — тестирование. На его выполнение обычно уходит около 60 минут, поэтому рекомендуем заранее выделить это время и выбрать спокойное место, где вас никто и ничто не будет отвлекать.
+Первым этапом нашего отбора является тестирование. Чтобы пройти его максимально комфортно, рекомендуем заранее выделить время и выбрать место, где вас ничего не будет отвлекать.
 
-В тесте есть вопросы с выбором ответа, открытые вопросы и задачи. На вопросы с выбором ответа отводится до 2 минут, на открытые вопросы — до 6 минут, на задачи — 15 минут.
+Тест состоит из четырех блоков: «Экономика», «Финансы и инвестиции», «Основы маркетинга» и открытые вопросы на логику.
+В первых трех разделах вам предстоит ответить на вопросы с вариантами ответов. В разделах «Экономика» и «Финансы и инвестиции» для каждого вопроса предусмотрен один правильный ответ, а в разделе «Основы маркетинга» может быть несколько правильных вариантов. На каждый вопрос отводится до 2 минут.
+В блоке с открытыми вопросами на первые 13 вопросов отводится до 7 минут, на вопросы с 14 по 31 — до 4 минут. На решение каждой открытой задачи предусмотрено до 15 минут.
 
 Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач.
 
 Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.
 
-Желаем удачи! 🍀
+Желаем удачи! 🍀 
 Будем рады познакомиться с вашим подходом в рамках тестирования и, если все сложится, встретиться с вами на очном интервью.</div>
     </section>
 
@@ -75,9 +77,9 @@ table { width:100%; border-collapse:collapse; font-size:14px } th,td { padding:1
       <div id="opts" style="margin-top:10px"></div>
       <textarea id="openAnswer" rows="6" class="hidden" placeholder="Введите ответ" style="margin-top:14px"></textarea>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
-        <button class="btn secondary" id="prevBtn">Назад</button>
-        <button class="btn secondary" id="skipBtn">Пропустить</button>
-        <button class="btn primary" id="nextBtn">Далее</button>
+        <button type="button" class="btn secondary" id="prevBtn">Назад</button>
+        <button type="button" class="btn secondary" id="skipBtn">Пропустить</button>
+        <button type="button" class="btn primary" id="nextBtn">Далее</button>
         <div class="small" style="margin-left:auto"><b id="timer">00:00</b></div>
       </div>
     </section>
@@ -279,11 +281,14 @@ function adminLogin(){
   el('adminCard').classList.remove('hidden');
   el('adminStatus').innerHTML = pass === 'admin2026' ? '<b>Доступ открыт.</b> Здесь можно добавить проверку открытых ответов и комментарии.' : 'Неверный пароль.';
 }
-el('startBtn').onclick = start;
-el('nextBtn').onclick = next;
-el('prevBtn').onclick = prev;
-el('skipBtn').onclick = next;
-el('adminPass').addEventListener('change', adminLogin);
+window.addEventListener('DOMContentLoaded', ()=>{
+  const s=el('startBtn'), n=el('nextBtn'), p=el('prevBtn'), k=el('skipBtn'), a=el('adminPass');
+  if(s) s.onclick = start;
+  if(n) n.onclick = next;
+  if(p) p.onclick = prev;
+  if(k) k.onclick = next;
+  if(a) a.addEventListener('change', adminLogin);
+});
 </script>
 </body>
 </html>
