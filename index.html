@@ -44,6 +44,7 @@ table { width:100%; border-collapse:collapse; font-size:14px } th,td { padding:1
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
         <button type="button" class="btn primary" id="startBtn">Начать тест</button>
       </div>
+      <div class="small" style="margin-top:12px">Для email с доменом @o2consulting.ru ограничений по количеству попыток нет, и попытки не привязаны к предыдущим прохождениям.</div>
     </aside>
 
     <section class="card" id="introCard">
@@ -214,7 +215,7 @@ let started = false;
 const el = id => document.getElementById(id);
 function fmt(s){ s=Math.max(0,s); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 function secFor(q){ if(q.type==='open') return q.id <= 13 ? 420 : 240; return 120; }
-function start(){ const fio = el('fio').value.trim(), email = el('email').value.trim(); if(!fio || !email){ alert('Пожалуйста, заполните ФИО и Email.'); return; } if(localStorage.getItem('attempt_'+email)){ alert('Для этого email уже была начата попытка.'); return; } localStorage.setItem('attempt_'+email, 'started'); currentEmail = email; started = true; const btn = el('startBtn'); if(btn) btn.classList.add('hidden'); answers = DATA.map(() => null); remainingByQ = {}; idx = 0; el('introCard').classList.add('hidden'); el('resultCard').classList.add('hidden'); el('testCard').classList.remove('hidden'); el('adminCard').classList.add('hidden'); render(); }
+function start(){ const fio = el('fio').value.trim(), email = el('email').value.trim(); if(!fio || !email){ alert('Пожалуйста, заполните ФИО и Email.'); return; } const unlimited = email.toLowerCase().endsWith('@o2consulting.ru'); if(!unlimited && localStorage.getItem('attempt_'+email)){ alert('Для этого email уже была начата попытка.'); return; } if(!unlimited) localStorage.setItem('attempt_'+email, 'started'); currentEmail = email; started = true; const btn = el('startBtn'); if(btn) btn.classList.add('hidden'); answers = DATA.map(() => null); remainingByQ = {}; idx = 0; el('introCard').classList.add('hidden'); el('resultCard').classList.add('hidden'); el('testCard').classList.remove('hidden'); el('adminCard').classList.add('hidden'); render(); }
 function render(){
   clearInterval(timer);
   const q = DATA[idx];
