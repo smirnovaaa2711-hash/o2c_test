@@ -77,7 +77,6 @@ table { width:100%; border-collapse:collapse; font-size:14px } th,td { padding:1
       <textarea id="openAnswer" rows="6" class="hidden" placeholder="Введите ответ" style="margin-top:14px"></textarea>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
         <button type="button" class="btn secondary" id="prevBtn">Назад</button>
-        <button type="button" class="btn secondary" id="skipBtn">Пропустить</button>
         <button type="button" class="btn primary" id="nextBtn">Далее</button>
         <div class="small" style="margin-left:auto"><b id="timer">00:00</b></div>
       </div>
@@ -250,7 +249,13 @@ function pick(letter){ answers[idx] = [letter]; render(); }
 function next(){
   clearInterval(timer);
   const q = DATA[idx];
-  if(q.type === 'open') answers[idx] = {text: el('openAnswer').value || ''};
+  if(q.type === 'open'){
+    const v = el('openAnswer').value.trim();
+    if(!v){ alert('Ответ обязателен.'); render(); return; }
+    answers[idx] = {text: v};
+  } else {
+    if(!answers[idx]){ alert('Выберите ответ.'); render(); return; }
+  }
   remainingByQ[q.id] = remaining;
   if(idx < DATA.length - 1){ idx++; render(); } else finish();
 }
@@ -287,11 +292,10 @@ function adminLogin(){
   el('adminStatus').innerHTML = pass === 'admin2026' ? '<b>Доступ открыт.</b> Здесь можно добавить проверку открытых ответов и комментарии.' : 'Неверный пароль.';
 }
 window.addEventListener('DOMContentLoaded', ()=>{
-  const s=el('startBtn'), n=el('nextBtn'), p=el('prevBtn'), k=el('skipBtn'), a=el('adminPass');
+  const s=el('startBtn'), n=el('nextBtn'), p=el('prevBtn'), a=el('adminPass');
   if(s) s.onclick = start;
   if(n) n.onclick = next;
   if(p) p.onclick = prev;
-  if(k) k.onclick = next;
   if(a) a.addEventListener('change', adminLogin);
 });
 </script>
