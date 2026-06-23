@@ -38,12 +38,13 @@ table { width:100%; border-collapse:collapse; font-size:14px } th,td { padding:1
   <div class="grid">
     <aside class="card">
       <h2 style="margin-top:0">Форма кандидата</h2>
-      <label>ФИО<input id="fio" placeholder="Введите ФИО"></label>
-      <label>Email<input id="email" placeholder="Введите email"></label>
+      <label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
+      <label>Email<input id="email" placeholder="Введите email" required></label>
       <label>Вход для администратора<input id="adminPass" type="password" placeholder="Вход для администратора"></label>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
         <button type="button" class="btn primary" id="startBtn">Начать тест</button>
-  
+      </div>
+    </aside>
 
     <section class="card" id="introCard">
       <h2 style="margin-top:0">Инструкция</h2>
@@ -208,16 +209,16 @@ const DATA = [
   {id:99,block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',timeLimit:360}
 ];
 const L = ['a','b','c','d','e','f'];
-let idx = 0, timer = null, remaining = 0, answers = [];
+let idx = 0, timer = null, remaining = 0, answers = [], remainingByQ = {};
 const el = id => document.getElementById(id);
 function fmt(s){ s=Math.max(0,s); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
-function secFor(q){ return q.type === 'open' ? 360 : 120; }
-function start(){ answers = DATA.map(() => null); idx = 0; el('introCard').classList.add('hidden'); el('resultCard').classList.add('hidden'); el('testCard').classList.remove('hidden'); el('adminCard').classList.add('hidden'); render(); }
+function secFor(q){ if(q.type==='open') return q.id <= 13 ? 420 : 240; return 120; }
+function start(){ const fio = el('fio').value.trim(), email = el('email').value.trim(); if(!fio || !email){ alert('Пожалуйста, заполните ФИО и Email.'); return; } answers = DATA.map(() => null); remainingByQ = {}; idx = 0; el('introCard').classList.add('hidden'); el('resultCard').classList.add('hidden'); el('testCard').classList.remove('hidden'); el('adminCard').classList.add('hidden'); render(); }
 function render(){
   clearInterval(timer);
   const q = DATA[idx];
   if(!q){ finish(); return; }
-  remaining = secFor(q);
+  remaining = (remainingByQ[q.id] != null ? remainingByQ[q.id] : secFor(q));
   el('meta').textContent = `${q.block} · Вопрос ${idx+1} из ${DATA.length}`;
   el('qText').textContent = q.question;
   el('bar').style.width = ((idx)/DATA.length*100)+'%';
@@ -239,6 +240,7 @@ function render(){
   timer = setInterval(()=>{
     remaining--;
     el('timer').textContent = fmt(remaining);
+    remainingByQ[q.id] = remaining;
     if(remaining <= 0) next();
   },1000);
 }
@@ -247,9 +249,10 @@ function next(){
   clearInterval(timer);
   const q = DATA[idx];
   if(q.type === 'open') answers[idx] = {text: el('openAnswer').value || ''};
+  remainingByQ[q.id] = remaining;
   if(idx < DATA.length - 1){ idx++; render(); } else finish();
 }
-function prev(){ if(idx > 0){ idx--; render(); } }
+function prev(){ if(idx > 0){ remainingByQ[DATA[idx].id] = remaining; idx--; render(); } }
 function finish(){
   clearInterval(timer);
   el('testCard').classList.add('hidden');
