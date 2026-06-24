@@ -37,6 +37,7 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;ve
 .optText{flex:1;min-width:0;line-height:1.25;font-size:16px}
 .optLetter{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#eef5f8;color:var(--ocean);font-weight:900;margin-right:10px;flex:0 0 auto}
 .adminLink{color:var(--ocean);text-decoration:none;font-weight:800}
+.fileList{margin-top:8px;font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -61,15 +62,15 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;ve
 
 <main class="wrap">
   <div class="toprow" id="introRow">
- <aside class="card" id="candidateCard">
-  <h2 style="margin-top:0">Форма кандидата</h2>
-  <label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
-  <label>Email<input id="email" placeholder="Введите email" required></label>
-  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
-    <button type="button" class="btn primary" id="startBtn">Начать тест</button>
-    <a class="btn secondary" href="admin.php" style="display:inline-flex;align-items:center;text-decoration:none">Админ-панель</a>
-  </div>
-</aside>
+    <aside class="card" id="candidateCard">
+      <h2 style="margin-top:0">Форма кандидата</h2>
+      <label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
+      <label>Email<input id="email" placeholder="Введите email" required></label>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+        <button type="button" class="btn primary" id="startBtn">Начать тест</button>
+        <a class="btn secondary" href="admin.php" style="display:inline-flex;align-items:center;text-decoration:none">Админ-панель</a>
+      </div>
+    </aside>
   </div>
 
   <section class="card" id="adminCard" style="margin-top:20px">
@@ -112,6 +113,33 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;ve
       </table>
     </div>
   </section>
+
+  <section class="card hidden" id="tasksCard" style="grid-column:1/-1">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+      <h2 style="margin:0">Задачи</h2>
+      <div class="small" id="taskMeta"></div>
+    </div>
+
+    <div class="progress" style="margin-top:12px"><span id="taskBar"></span></div>
+
+    <h3 id="taskTitle" style="margin:16px 0 10px"></h3>
+    <div id="taskText" style="line-height:1.6"></div>
+
+    <label style="margin-top:16px">Ответ
+      <textarea id="taskAnswer" rows="10" placeholder="Введите развернутый ответ"></textarea>
+    </label>
+
+    <label style="margin-top:12px">Прикрепить файл
+      <input id="taskFile" type="file" accept=".doc,.docx,.pdf,.txt,.rtf,.odt">
+      <div class="fileList" id="taskFileName">Файл не выбран</div>
+    </label>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
+      <button type="button" class="btn secondary" id="taskPrevBtn">Назад</button>
+      <button type="button" class="btn primary" id="taskNextBtn">Далее</button>
+      <div class="small" style="margin-left:auto"><b id="taskTimer">60:00</b></div>
+    </div>
+  </section>
 </main>
 
 <script>
@@ -138,6 +166,7 @@ const DATA=[
   {block:'Экономика',type:'single',question:'Для фазы экономического спада наиболее характерно:',options:['рост инвестиций','дефицит рабочей силы','ускорение инфляции спроса','увеличение безработицы'],correct:['d']},
   {block:'Экономика',type:'single',question:'Рост экспорта при прочих равных условиях оказывает какое влияние на торговый баланс страны?',options:['улучшает торговый баланс','ухудшает торговый баланс','не влияет','приводит к росту инфляции'],correct:['a']},
   {block:'Экономика',type:'single',question:'Введение импортных ограничений в краткосрочном периоде наиболее вероятно приводит к:',options:['снижению цен на импортные товары','увеличению конкуренции иностранных производителей','сокращению предложения импортной продукции','снижению себестоимости импортных товаров'],correct:['c']},
+
   {block:'Финансы',type:'single',question:'Для определения IRR проекта используется метод:',options:['цепных подстановок','наименьших квадратов','последовательных итераций','критического пути'],correct:['c']},
   {block:'Финансы',type:'single',question:'При прочих равных условиях наиболее привлекательным является инвестиционный проект, у которого:',options:['срок окупаемости больше','PI меньше','NPV больше','ставка дисконтирования выше'],correct:['c']},
   {block:'Финансы',type:'single',question:'При принятии решения об инвестировании необходимо учитывать ...',options:['инфляцию, риски, альтернативные варианты инвестирования','инфляцию и риски','инфляцию и альтернативные варианты инвестирования','риски и альтернативные варианты инвестирования'],correct:['a']},
@@ -175,6 +204,7 @@ const DATA=[
   {block:'Финансы',type:'single',question:'Стоимость компании чаще всего оценивают методом:',options:['средней арифметической прибыли','дисконтирования будущих денежных потоков (DCF)','расчета срока окупаемости','анализа точки безубыточности'],correct:['b']},
   {block:'Финансы',type:'single',question:'Показатель EBITDA используется для оценки:',options:['чистого денежного потока','операционной эффективности компании до учета процентов, налогов и амортизации','стоимости основных средств','уровня дебиторской задолженности'],correct:['b']},
   {block:'Финансы',type:'single',question:'Высокое значение Debt/EBITDA обычно свидетельствует о:',options:['высокой ликвидности компании','высокой долговой нагрузке компании','высокой рентабельности продаж','высокой оборачиваемости запасов'],correct:['b']},
+
   {block:'Маркетинг',type:'multi',question:'Маркетинговые исследования на первом этапе предполагают:',options:['организацию системы снабжения','исследование рынков сбыта','составление системы контроля','планирование бюджета фирм'],correct:['b']},
   {block:'Маркетинг',type:'multi',question:'Факторы, влияющие на рынок спортивной одежды (возможны несколько вариантов):',options:['стоимость сырья','увеличение сегмента интернет-торговли','использование современных технологий','государственная политика','выпуск спортивных линеек производителями неспортивных марок','расширение возрастного диапазона покупателей спортивной одежды'],correct:['a','c','d']},
   {block:'Маркетинг',type:'multi',question:'Тенденции рынка лесных товаров (возможны несколько вариантов):',options:['опережающий рост продукции деревообработки (около 24%) над целлюлозно-бумажной продукцией (около 11%)','сокращении экспорта продукции отрасли (на 10-12%)','рост инвестиций в развитие «зеленых технологий» вырубки леса','рост сегмента производства пиловочника на 14-16% ежегодно в течение последних 2 лет'],correct:['a','d']},
@@ -200,6 +230,7 @@ const DATA=[
   {block:'Маркетинг',type:'multi',question:'Какая матрица основана на оценке следующих параметров: сильные и слабые стороны, возможности и угрозы со стороны внешней среды:',options:['SWOT-матрица','матрица Бостонской Консалтинговой группы','матрица направлений плотики','матрица Ансоффа'],correct:['a']},
   {block:'Маркетинг',type:'multi',question:'Для оценки конкурентной среды и определения источников конкурентных преимуществ весьма полезной будет:',options:['Бостонская модель','пятифакторная модель М.Портера','модель Н.Ансоффа','сетевой график'],correct:['b']},
   {block:'Маркетинг',type:'multi',question:'Что означает показатель LTV (Lifetime Value)?',options:['стоимость одной рекламной кампании','ожидаемую прибыль от клиента за весь период сотрудничества','среднюю стоимость товара','объем рынка'],correct:['b']},
+
   {block:'Открытые вопросы',type:'open',question:'Как много пива выпито в Москве за прошлую неделю?',time:420},
   {block:'Открытые вопросы',type:'open',question:'Яблоко стоит 12 рублей, апельсин — 14 рублей, грейпфрут — 16 рублей. Сколько стоит груша?',time:420},
   {block:'Открытые вопросы',type:'open',question:'Сколько поездов метро обслуживает московское метро в час пик?',time:420},
@@ -230,8 +261,10 @@ const DATA=[
   {block:'Открытые вопросы',type:'open',question:'Кто написал роман «Отцы и дети»? Перечислите ещё 3 произведения этого автора.',time:120},
   {block:'Открытые вопросы',type:'open',question:'Как называется газ, поддерживающий горение?',time:120},
   {block:'Открытые вопросы',type:'open',question:'Назовите самую большую артерию человека',time:120},
-  {block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',time:120},
-  const TASKS = [
+  {block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',time:120}
+];
+
+const TASKS = [
   {
     id: 1,
     title: 'Задание №1. Подбор решения для поисковой системы интернет-магазина',
@@ -252,139 +285,11 @@ const DATA=[
   }
 ];
 
-let taskIdx = 0;
-let taskTimer = null;
-let taskRemaining = 3600;
-let taskAnswers = [];
-let taskFiles = [];
-
-function secToMMSS(s) {
-  s = Math.max(0, s);
-  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-}
-
-function startTasks() {
-  taskIdx = 0;
-  taskRemaining = 3600;
-  taskAnswers = TASKS.map(() => '');
-  taskFiles = TASKS.map(() => null);
-
-  el('testCard').classList.add('hidden');
-  el('tasksCard').classList.remove('hidden');
-  renderTask();
-}
-
-function renderTask() {
-  clearInterval(taskTimer);
-  const t = TASKS[taskIdx];
-
-  el('taskMeta').textContent = `Задача ${taskIdx + 1} из ${TASKS.length}`;
-  el('taskTitle').textContent = t.title;
-  el('taskText').textContent = t.text;
-  el('taskBar').style.width = (((taskIdx + 1) / TASKS.length) * 100) + '%';
-  el('taskAnswer').value = taskAnswers[taskIdx] || '';
-  el('taskFile').value = '';
-  el('taskTimer').textContent = secToMMSS(taskRemaining);
-
-  taskTimer = setInterval(() => {
-    taskRemaining--;
-    el('taskTimer').textContent = secToMMSS(taskRemaining);
-    if (taskRemaining <= 0) {
-      saveTaskStep();
-      nextTask();
-    }
-  }, 1000);
-}
-
-function saveTaskStep() {
-  taskAnswers[taskIdx] = el('taskAnswer').value.trim();
-  const f = el('taskFile').files[0];
-  if (f) taskFiles[taskIdx] = f.name;
-}
-
-function nextTask() {
-  clearInterval(taskTimer);
-  saveTaskStep();
-
-  if (taskIdx < TASKS.length - 1) {
-    taskIdx++;
-    taskRemaining = 3600;
-    renderTask();
-  } else {
-    finishTasks();
-  }
-}
-
-function prevTask() {
-  clearInterval(taskTimer);
-  saveTaskStep();
-
-  if (taskIdx > 0) {
-    taskIdx--;
-    taskRemaining = 3600;
-    renderTask();
-  }
-}
-
-function finishTasks() {
-  clearInterval(taskTimer);
-  el('tasksCard').classList.add('hidden');
-  el('resultCard').classList.remove('hidden');
-
-  const tbody = el('tb');
-  tbody.innerHTML = '';
-
-  TASKS.forEach((t, i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${i + 1}</td>
-      <td>Задача</td>
-      <td>${t.title}</td>
-      <td>${taskAnswers[i] || '—'}</td>
-      <td>${taskFiles[i] || '—'}</td>
-      <td>На проверке</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-  <section class="card hidden" id="tasksCard" style="grid-column:1/-1">
-  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
-    <h2 style="margin:0">Задачи</h2>
-    <div class="small" id="taskMeta"></div>
-  </div>
-
-  <div class="progress" style="margin-top:12px"><span id="taskBar"></span></div>
-
-  <h3 id="taskTitle" style="margin:16px 0 10px"></h3>
-  <div id="taskText" style="line-height:1.6"></div>
-
-  <label style="margin-top:16px">Ответ
-    <textarea id="taskAnswer" rows="10" placeholder="Введите развернутый ответ"></textarea>
-  </label>
-
-  <label style="margin-top:12px">Прикрепить файл
-    <input id="taskFile" type="file" accept=".doc,.docx,.pdf,.txt,.rtf,.odt">
-  </label>
-
-  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
-    <button type="button" class="btn secondary" id="taskPrevBtn">Назад</button>
-    <button type="button" class="btn primary" id="taskNextBtn">Далее</button>
-    <div class="small" style="margin-left:auto"><b id="taskTimer">60:00</b></div>
-  </div>
-</section>
-  window.addEventListener('DOMContentLoaded', () => {
-  el('startBtn').onclick = start;
-  el('nextBtn').onclick = next;
-  el('prevBtn').onclick = prev;
-  el('adminLoginBtn').onclick = adminLogin;
-
-  el('taskNextBtn').onclick = nextTask;
-  el('taskPrevBtn').onclick = prevTask;
-});
 const letters=['a','b','c','d','e','f'];
 let idx=0,timer=null,remaining=0,answers=[],remainingByQ={},currentFio='';
-const el=id=>document.getElementById(id);
+let taskIdx=0,taskTimer=null,taskRemaining=3600,taskAnswers=[],taskFiles=[];
 
+const el=id=>document.getElementById(id);
 function fmt(s){s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 function secFor(q){return q.time || (q.type==='open'?240:120)}
 function loadRuns(){try{return JSON.parse(localStorage.getItem('hr_test_runs')||'[]')}catch(e){return[]}}
@@ -409,7 +314,7 @@ function start(){
 function render(){
   clearInterval(timer);
   const q=DATA[idx];
-  if(!q){finish();return}
+  if(!q){startTasks();return}
   remaining=(remainingByQ[idx]!=null?remainingByQ[idx]:secFor(q));
   const blockTotal=DATA.filter(x=>x.block===q.block).length;
   const blockIndex=DATA.slice(0,idx+1).filter(x=>x.block===q.block).length;
@@ -420,11 +325,11 @@ function render(){
 
   const opts=el('opts');
   opts.innerHTML='';
-  el('openAnswer').classList.toggle('hidden',q.type!=='open'&&q.type!=='task');
+  el('openAnswer').classList.toggle('hidden',q.type!=='open');
 
-  if(q.type==='open' || q.type==='task'){
+  if(q.type==='open'){
     el('openAnswer').value=answers[idx]?.text||'';
-    el('openAnswer').placeholder=q.type==='task'?'Введите развернутый ответ на 60 минут':'Введите ответ';
+    el('openAnswer').placeholder='Введите ответ';
   }else{
     const chosen=answers[idx]||[];
     q.options.forEach((o,i)=>{
@@ -459,7 +364,7 @@ function toggle(letter){
 async function next(){
   clearInterval(timer);
   const q=DATA[idx];
-  if(q.type==='open' || q.type==='task'){
+  if(q.type==='open'){
     const v=el('openAnswer').value.trim();
     if(!v){alert('Ответ обязателен.');render();return}
     answers[idx]={text:v};
@@ -467,21 +372,82 @@ async function next(){
     if(!(answers[idx]&&answers[idx].length)){alert('Выберите ответ.');render();return}
   }
   remainingByQ[idx]=remaining;
-  if(idx<DATA.length-1){idx++;render()}else finish();
+  if(idx<DATA.length-1){idx++;render()}else startTasks();
 }
 
 function prev(){
   if(idx>0){remainingByQ[idx]=remaining;idx--;render()}
 }
 
-async function finish(){
+function startTasks(){
+  taskIdx=0;
+  taskRemaining=3600;
+  taskAnswers=TASKS.map(()=>'' );
+  taskFiles=TASKS.map(()=>null);
   clearInterval(timer);
   el('testCard').classList.add('hidden');
+  el('tasksCard').classList.remove('hidden');
+  renderTask();
+}
+
+function renderTask(){
+  clearInterval(taskTimer);
+  const t=TASKS[taskIdx];
+  el('taskMeta').textContent=`Задача ${taskIdx+1} из ${TASKS.length}`;
+  el('taskTitle').textContent=t.title;
+  el('taskText').textContent=t.text;
+  el('taskBar').style.width=(((taskIdx+1)/TASKS.length)*100)+'%';
+  el('taskAnswer').value=taskAnswers[taskIdx]||'';
+  el('taskFile').value='';
+  el('taskFileName').textContent=taskFiles[taskIdx] ? `Выбран файл: ${taskFiles[taskIdx]}` : 'Файл не выбран';
+  el('taskTimer').textContent=fmt(taskRemaining);
+
+  taskTimer=setInterval(()=>{
+    taskRemaining--;
+    el('taskTimer').textContent=fmt(taskRemaining);
+    if(taskRemaining<=0){saveTaskStep();nextTask()}
+  },1000);
+}
+
+function saveTaskStep(){
+  taskAnswers[taskIdx]=el('taskAnswer').value.trim();
+  const f=el('taskFile').files[0];
+  if(f){
+    taskFiles[taskIdx]=f.name;
+    el('taskFileName').textContent=`Выбран файл: ${f.name}`;
+  }
+}
+
+function nextTask(){
+  clearInterval(taskTimer);
+  saveTaskStep();
+  if(taskIdx<TASKS.length-1){
+    taskIdx++;
+    taskRemaining=3600;
+    renderTask();
+  }else{
+    finish();
+  }
+}
+
+function prevTask(){
+  clearInterval(taskTimer);
+  saveTaskStep();
+  if(taskIdx>0){
+    taskIdx--;
+    taskRemaining=3600;
+    renderTask();
+  }
+}
+
+function finish(){
+  clearInterval(taskTimer);
+  el('tasksCard').classList.add('hidden');
   el('resultCard').classList.remove('hidden');
 
   const fio=currentFio||el('fio').value.trim()||'Без имени';
-  const candScore=DATA.filter((q,i)=>q.type!=='open'&&q.type!=='task'&&JSON.stringify((answers[i]||[]).slice().sort())===JSON.stringify((q.correct||[]).slice().sort())).length;
-  const total=DATA.filter(q=>q.type!=='open'&&q.type!=='task').length;
+  const candScore=DATA.filter((q,i)=>q.type!=='open'&&JSON.stringify((answers[i]||[]).slice().sort())===JSON.stringify((q.correct||[]).slice().sort())).length;
+  const total=DATA.filter(q=>q.type!=='open').length;
   const pct=total?Math.round(candScore/total*100):0;
 
   el('rCand').textContent=fio;
@@ -495,15 +461,20 @@ async function finish(){
     score:candScore,
     total,
     pct,
-    taskAnswer:answers[DATA.length-1]?.text||'',
     answers:DATA.map((q,i)=>({
       block:q.block,
       question:q.question,
-      answer:q.type==='open'||q.type==='task'?((answers[i]&&answers[i].text)||''):(answers[i]||[]).join('|'),
+      answer:q.type==='open'?((answers[i]&&answers[i].text)||''):(answers[i]||[]).join('|'),
       correct:q.correct?q.correct.join('|'):'—',
-      status:(q.type==='open'||q.type==='task')
+      status:q.type==='open'
         ?'На проверке'
         :(((answers[i]||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно')
+    })),
+    tasks:TASKS.map((t,i)=>({
+      title:t.title,
+      answer:taskAnswers[i]||'',
+      file:taskFiles[i]||'',
+      time:3600
     }))
   };
 
@@ -515,24 +486,15 @@ async function finish(){
   tb.innerHTML='';
   DATA.forEach((q,i)=>{
     const ans=answers[i];
-    const ansText=q.type==='open'||q.type==='task'?((ans&&ans.text)||'—'):((ans||[]).join('|')||'—');
+    const ansText=q.type==='open'?((ans&&ans.text)||'—'):((ans||[]).join('|')||'—');
     const corText=q.correct?q.correct.join('|'):'—';
-    const ok=(q.type==='open'||q.type==='task')
+    const ok=q.type==='open'
       ?'На проверке'
       :(((ans||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно');
-
     const tr=document.createElement('tr');
     tr.innerHTML=`<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;
     tb.appendChild(tr);
   });
-
-  try{
-    await fetch('submit.php',{
-      method:'POST',
-      body:JSON.stringify(run),
-      headers:{'Content-Type':'application/json'}
-    });
-  }catch(e){}
 }
 
 function adminLogin(){
@@ -549,7 +511,7 @@ function showRun(i){
   if(!r)return;
   const d=el('adminRunDetail');
   if(!d)return;
-  d.innerHTML=`<h3 style="margin:0 0 10px">${r.fio}</h3><div class="small">Email: ${r.email||'—'}<br>Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>Баллы: ${r.score} / ${r.total} (${r.pct}%)</div><div style="overflow:auto;max-height:420px;margin-top:12px"><table><thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead><tbody>${r.answers.map((x,idx)=>`<tr><td>${idx+1}</td><td>${x.block}</td><td>${x.question}</td><td>${x.answer||'—'}</td><td>${x.correct}</td><td>${x.status}</td></tr>`).join('')}</tbody></table></div>`;
+  d.innerHTML=`<h3 style="margin:0 0 10px">${r.fio}</h3><div class="small">Email: ${r.email||'—'}<br>Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>Баллы: ${r.score} / ${r.total} (${r.pct}%)</div><div style="overflow:auto;max-height:420px;margin-top:12px"><table><thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead><tbody>${r.answers.map((x,idx)=>`<tr><td>${idx+1}</td><td>${x.block}</td><td>${x.question}</td><td>${x.answer||'—'}</td><td>${x.correct}</td><td>${x.status}</td></tr>`).join('')}</tbody></table></div><div style="overflow:auto;max-height:260px;margin-top:16px"><table><thead><tr><th>Задача</th><th>Ответ</th><th>Файл</th></tr></thead><tbody>${(r.tasks||[]).map(t=>`<tr><td>${t.title}</td><td>${t.answer||'—'}</td><td>${t.file||'—'}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
@@ -557,6 +519,12 @@ window.addEventListener('DOMContentLoaded',()=>{
   el('nextBtn').onclick=next;
   el('prevBtn').onclick=prev;
   el('adminLoginBtn').onclick=adminLogin;
+  el('taskNextBtn').onclick=nextTask;
+  el('taskPrevBtn').onclick=prevTask;
+  el('taskFile').addEventListener('change',()=>{
+    const f=el('taskFile').files[0];
+    el('taskFileName').textContent=f ? `Выбран файл: ${f.name}` : 'Файл не выбран';
+  });
 });
 </script>
 </body>
