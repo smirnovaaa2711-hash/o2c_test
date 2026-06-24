@@ -231,8 +231,156 @@ const DATA=[
   {block:'Открытые вопросы',type:'open',question:'Как называется газ, поддерживающий горение?',time:120},
   {block:'Открытые вопросы',type:'open',question:'Назовите самую большую артерию человека',time:120},
   {block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',time:120},
-  {block:'Задачи',type:'task',question:'Задание №1. Подбор решения для поисковой системы интернет-магазина. Интернет-магазин «Абибас» сталкивается с проблемами в работе поисковой строки: поиск выдает ошибки, неполные результаты и нерелевантные подсказки. Необходимо: найти и кратко описать 8–10 готовых решений; определить критерии сравнения; провести сравнительный анализ; выбрать 2–3 подходящих решения; подготовить рекомендации. Допускается самостоятельно сформулировать допущения. Результат: аналитическая записка объемом до 3 страниц. Ориентировочное время выполнения — 60 минут.',time:3600}
+  const TASKS = [
+  {
+    id: 1,
+    title: 'Задание №1. Подбор решения для поисковой системы интернет-магазина',
+    text: 'Интернет-магазин «Абибас» сталкивается с проблемами в работе поисковой строки: поиск выдает ошибки, неполные результаты и нерелевантные подсказки. Необходимо: найти и кратко описать 8–10 готовых решений; определить критерии сравнения; провести сравнительный анализ; выбрать 2–3 подходящих решения; подготовить рекомендации. Допускается самостоятельно сформулировать допущения. Результат: аналитическая записка объемом до 3 страниц.',
+    time: 3600
+  },
+  {
+    id: 2,
+    title: 'Задание №2. Выбор инструмента аналитики',
+    text: 'Компания хочет внедрить систему аналитики продаж и маркетинга. Необходимо: предложить 8–10 готовых решений; описать функциональность; сравнить по стоимости, интеграциям, удобству, отчетности и масштабируемости; выбрать 2–3 решения и обосновать выбор; дать рекомендации по внедрению.',
+    time: 3600
+  },
+  {
+    id: 3,
+    title: 'Задание №3. Выбор CRM/ERP-решения',
+    text: 'Компания планирует автоматизировать работу отдела продаж и склада. Необходимо: подобрать 8–10 готовых решений; сравнить по критериям; выделить плюсы и минусы; выбрать 2–3 варианта; подготовить итоговые рекомендации и краткий план внедрения.',
+    time: 3600
+  }
 ];
+
+let taskIdx = 0;
+let taskTimer = null;
+let taskRemaining = 3600;
+let taskAnswers = [];
+let taskFiles = [];
+
+function secToMMSS(s) {
+  s = Math.max(0, s);
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+}
+
+function startTasks() {
+  taskIdx = 0;
+  taskRemaining = 3600;
+  taskAnswers = TASKS.map(() => '');
+  taskFiles = TASKS.map(() => null);
+
+  el('testCard').classList.add('hidden');
+  el('tasksCard').classList.remove('hidden');
+  renderTask();
+}
+
+function renderTask() {
+  clearInterval(taskTimer);
+  const t = TASKS[taskIdx];
+
+  el('taskMeta').textContent = `Задача ${taskIdx + 1} из ${TASKS.length}`;
+  el('taskTitle').textContent = t.title;
+  el('taskText').textContent = t.text;
+  el('taskBar').style.width = (((taskIdx + 1) / TASKS.length) * 100) + '%';
+  el('taskAnswer').value = taskAnswers[taskIdx] || '';
+  el('taskFile').value = '';
+  el('taskTimer').textContent = secToMMSS(taskRemaining);
+
+  taskTimer = setInterval(() => {
+    taskRemaining--;
+    el('taskTimer').textContent = secToMMSS(taskRemaining);
+    if (taskRemaining <= 0) {
+      saveTaskStep();
+      nextTask();
+    }
+  }, 1000);
+}
+
+function saveTaskStep() {
+  taskAnswers[taskIdx] = el('taskAnswer').value.trim();
+  const f = el('taskFile').files[0];
+  if (f) taskFiles[taskIdx] = f.name;
+}
+
+function nextTask() {
+  clearInterval(taskTimer);
+  saveTaskStep();
+
+  if (taskIdx < TASKS.length - 1) {
+    taskIdx++;
+    taskRemaining = 3600;
+    renderTask();
+  } else {
+    finishTasks();
+  }
+}
+
+function prevTask() {
+  clearInterval(taskTimer);
+  saveTaskStep();
+
+  if (taskIdx > 0) {
+    taskIdx--;
+    taskRemaining = 3600;
+    renderTask();
+  }
+}
+
+function finishTasks() {
+  clearInterval(taskTimer);
+  el('tasksCard').classList.add('hidden');
+  el('resultCard').classList.remove('hidden');
+
+  const tbody = el('tb');
+  tbody.innerHTML = '';
+
+  TASKS.forEach((t, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td>Задача</td>
+      <td>${t.title}</td>
+      <td>${taskAnswers[i] || '—'}</td>
+      <td>${taskFiles[i] || '—'}</td>
+      <td>На проверке</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+  <section class="card hidden" id="tasksCard" style="grid-column:1/-1">
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+    <h2 style="margin:0">Задачи</h2>
+    <div class="small" id="taskMeta"></div>
+  </div>
+
+  <div class="progress" style="margin-top:12px"><span id="taskBar"></span></div>
+
+  <h3 id="taskTitle" style="margin:16px 0 10px"></h3>
+  <div id="taskText" style="line-height:1.6"></div>
+
+  <label style="margin-top:16px">Ответ
+    <textarea id="taskAnswer" rows="10" placeholder="Введите развернутый ответ"></textarea>
+  </label>
+
+  <label style="margin-top:12px">Прикрепить файл
+    <input id="taskFile" type="file" accept=".doc,.docx,.pdf,.txt,.rtf,.odt">
+  </label>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:center">
+    <button type="button" class="btn secondary" id="taskPrevBtn">Назад</button>
+    <button type="button" class="btn primary" id="taskNextBtn">Далее</button>
+    <div class="small" style="margin-left:auto"><b id="taskTimer">60:00</b></div>
+  </div>
+</section>
+  window.addEventListener('DOMContentLoaded', () => {
+  el('startBtn').onclick = start;
+  el('nextBtn').onclick = next;
+  el('prevBtn').onclick = prev;
+  el('adminLoginBtn').onclick = adminLogin;
+
+  el('taskNextBtn').onclick = nextTask;
+  el('taskPrevBtn').onclick = prevTask;
+});
 const letters=['a','b','c','d','e','f'];
 let idx=0,timer=null,remaining=0,answers=[],remainingByQ={},currentFio='';
 const el=id=>document.getElementById(id);
