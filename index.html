@@ -59,14 +59,15 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;ve
 
 <main class="wrap">
   <div class="toprow" id="introRow">
-    <aside class="card" id="candidateCard">
-      <h2 style="margin-top:0">Форма кандидата</h2>
-      <label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
-      <label>Email<input id="email" placeholder="Введите email" required></label>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
-        <button type="button" class="btn primary" id="startBtn">Начать тест</button>
-      </div>
-    </aside>
+ <aside class="card" id="candidateCard">
+  <h2 style="margin-top:0">Форма кандидата</h2>
+  <label>ФИО<input id="fio" placeholder="Введите ФИО" required></label>
+  <label>Email<input id="email" placeholder="Введите email" required></label>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+    <button type="button" class="btn primary" id="startBtn">Начать тест</button>
+    <a class="btn secondary" href="admin.php" style="display:inline-flex;align-items:center;text-decoration:none">Админ-панель</a>
+  </div>
+</aside>
   </div>
 
   <section class="card" id="adminCard" style="margin-top:20px">
@@ -221,7 +222,9 @@ async function finish(){
       question:q.question,
       answer:q.type==='open'||q.type==='task'?((answers[i]&&answers[i].text)||''):(answers[i]||[]).join('|'),
       correct:q.correct?q.correct.join('|'):'—',
-      status:(q.type==='open'||q.type==='task')?'На проверке':(((answers[i]||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно')
+      status:(q.type==='open'||q.type==='task')
+        ?'На проверке'
+        :(((answers[i]||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно')
     }))
   };
 
@@ -235,7 +238,10 @@ async function finish(){
     const ans=answers[i];
     const ansText=q.type==='open'||q.type==='task'?((ans&&ans.text)||'—'):((ans||[]).join('|')||'—');
     const corText=q.correct?q.correct.join('|'):'—';
-    const ok=(q.type==='open'||q.type==='task')?'На проверке':(((ans||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно');
+    const ok=(q.type==='open'||q.type==='task')
+      ?'На проверке'
+      :(((ans||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно');
+
     const tr=document.createElement('tr');
     tr.innerHTML=`<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;
     tb.appendChild(tr);
