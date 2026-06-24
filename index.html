@@ -5,191 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HR Test Platform</title>
 <style>
-:root{
-  --mint:#00c8ab;
-  --ocean:#00519a;
-  --bg:#f5fafb;
-  --surface:#fff;
-  --surface2:#f3f8fa;
-  --text:#17303d;
-  --muted:#5d7482;
-  --border:#dbe7ee;
-  --shadow:0 10px 28px rgba(2,30,40,.08);
-  --ok:#0b8f5a;
-  --bad:#c0392b;
-}
+:root{--mint:#00c8ab;--ocean:#00519a;--bg:#f5fafb;--surface:#fff;--surface2:#f3f8fa;--text:#17303d;--muted:#5d7482;--border:#dbe7ee;--shadow:0 10px 28px rgba(2,30,40,.08)}
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  padding:0;
-  font-family:Inter,Arial,sans-serif;
-  background:linear-gradient(180deg,#eef9f7 0%,var(--bg) 36%);
-  color:var(--text)
-}
+html,body{margin:0;padding:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#eef9f7 0%,var(--bg) 36%);color:var(--text)}
 body{min-height:100vh}
-.wrap{
-  max-width:1160px;
-  margin:0 auto;
-  padding:24px
-}
-.hero{
-  background:linear-gradient(135deg,var(--ocean),#0a6db0 55%,var(--mint));
-  color:#fff;
-  padding:34px 0 40px;
-  box-shadow:var(--shadow)
-}
-.hero h1{
-  margin:10px 0 8px;
-  font-size:clamp(28px,4vw,44px)
-}
-.badge{
-  display:inline-flex;
-  background:rgba(255,255,255,.15);
-  padding:8px 12px;
-  border-radius:999px;
-  font-weight:700;
-  font-size:13px
-}
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  box-shadow:var(--shadow);
-  padding:20px
-}
+.wrap{max-width:1160px;margin:0 auto;padding:24px}
+.hero{background:linear-gradient(135deg,var(--ocean),#0a6db0 55%,var(--mint));color:#fff;padding:34px 0 40px;box-shadow:var(--shadow)}
+.hero h1{margin:10px 0 8px;font-size:clamp(28px,4vw,44px)}
+.badge{display:inline-flex;background:rgba(255,255,255,.15);padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:20px}
 .soft{background:var(--surface2)}
-.toprow{
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:20px;
-  align-items:start;
-  margin-top:-34px
-}
-.btn{
-  border:none;
-  border-radius:14px;
-  padding:14px 18px;
-  font-weight:800;
-  cursor:pointer
-}
+.toprow{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start;margin-top:-34px}
+.btn{border:none;border-radius:14px;padding:14px 18px;font-weight:800;cursor:pointer}
 .primary{background:var(--mint);color:#053e38}
 .secondary{background:#eaf3f8;color:var(--ocean)}
-input,textarea{
-  width:100%;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  font:inherit;
-  background:#fff
-}
-label{
-  display:block;
-  font-weight:700;
-  margin-bottom:8px
-}
+input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);font:inherit;background:#fff}
+label{display:block;font-weight:700;margin-bottom:8px}
 .small{color:var(--muted);font-size:14px}
 .hidden{display:none !important}
-.progress{
-  height:10px;
-  background:#e8f1f4;
-  border-radius:999px;
-  overflow:hidden
-}
-.progress span{
-  display:block;
-  height:100%;
-  background:var(--mint);
-  width:0%
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px
-}
-th,td{
-  padding:10px 12px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
-  vertical-align:top
-}
-@media(max-width:960px){
-  .toprow{grid-template-columns:1fr}
-}
-
+.progress{height:10px;background:#e8f1f4;border-radius:999px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--mint);width:0%}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+@media(max-width:960px){.toprow{grid-template-columns:1fr}}
 .opts{margin-top:12px;display:grid;gap:10px}
-.opt{
-  position:relative;
-  display:flex;
-  align-items:flex-start;
-  gap:14px;
-  padding:16px 18px;
-  border:1px solid var(--border);
-  border-radius:16px;
-  background:#fff;
-  cursor:pointer;
-  transition:.18s ease;
-  user-select:none
-}
-.opt:hover{
-  border-color:#b9d4e4;
-  box-shadow:0 8px 20px rgba(2,30,40,.05)
-}
-.opt.sel{
-  border-color:var(--ocean);
-  background:#f4f9ff;
-  box-shadow:0 0 0 3px rgba(0,81,154,.08)
-}
-.optMark{
-  width:22px;
-  height:22px;
-  border-radius:999px;
-  border:2px solid #b5c5d1;
-  background:#fff;
-  flex:0 0 auto;
-  margin-top:2px;
-  position:relative;
-  transition:.18s ease
-}
-.opt.sel .optMark{
-  border-color:var(--ocean);
-  background:var(--ocean)
-}
-.opt.sel .optMark:after{
-  content:'';
-  position:absolute;
-  left:6px;
-  top:2px;
-  width:6px;
-  height:12px;
-  border:solid #fff;
-  border-width:0 3px 3px 0;
-  transform:rotate(45deg)
-}
-.optText{
-  flex:1;
-  min-width:0;
-  line-height:1.25;
-  font-size:16px
-}
-.optLetter{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:#eef5f8;
-  color:var(--ocean);
-  font-weight:900;
-  margin-right:10px;
-  flex:0 0 auto
-}
-.adminLink{
-  color:var(--ocean);
-  text-decoration:none;
-  font-weight:800
-}
-.adminLink:hover{text-decoration:underline}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1px solid var(--border);border-radius:16px;background:#fff;cursor:pointer}
+.opt.sel{border-color:var(--ocean);background:#f4f9ff}
+.optMark{width:22px;height:22px;border-radius:999px;border:2px solid #b5c5d1;background:#fff;flex:0 0 auto;margin-top:2px;position:relative}
+.opt.sel .optMark{border-color:var(--ocean);background:var(--ocean)}
+.opt.sel .optMark:after{content:'';position:absolute;left:6px;top:2px;width:6px;height:12px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg)}
+.optText{flex:1;min-width:0;line-height:1.25;font-size:16px}
+.optLetter{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#eef5f8;color:var(--ocean);font-weight:900;margin-right:10px;flex:0 0 auto}
+.adminLink{color:var(--ocean);text-decoration:none;font-weight:800}
 </style>
 </head>
 <body>
@@ -204,9 +51,7 @@ th,td{
         Спасибо за ваш отклик!<br><br>
         Первым этапом нашего отбора является тестирование. Чтобы пройти его максимально комфортно, рекомендуем заранее выделить время и выбрать место, где вас ничего не будет отвлекать. Тест состоит из четырех блоков: «Экономика», «Финансы и инвестиции», «Основы маркетинга» и открытые вопросы на логику.<br><br>
         В первых трех разделах вам предстоит ответить на вопросы с вариантами ответов. В разделах «Экономика» и «Финансы и инвестиции» для каждого вопроса предусмотрен один правильный ответ, а в разделе «Основы маркетинга» может быть несколько правильных вариантов. На каждый закрытый вопрос отводится до 2 минут. В блоке с открытыми вопросами на первые 13 вопросов отводится до 7 минут, на вопросы с 14-31 до 4 минут. На решение каждой открытой задачи предусмотрено до 15 минут.<br><br>
-        Просим проходить тест самостоятельно, без использования интернета, нейросетей и любых других сторонних источников. Нам важно увидеть именно ваши знания, ход мыслей и подход к решению задач. Не переживайте, если не уверены в итоговом ответе. В открытых вопросах и задачах мы в первую очередь смотрим на логику рассуждений, последовательность расчетов и сам подход к решению, а не только на правильность конечного результата.<br><br>
-        Желаем удачи! 🍀<br>
-        Будем рады познакомиться с вашим подходом в рамках тестирования и встретиться на очном интервью!
+        Желаем удачи! 🍀
       </div>
     </div>
   </div>
@@ -267,9 +112,11 @@ th,td{
 
   <section class="card hidden" id="extraTasksBlock" style="grid-column:1/-1;margin-top:12px">
     <h2 style="margin-top:0">Дополнительные задания</h2>
-    <div class="card soft" style="margin-top:12px"><b>Задание №1.</b> Интернет-магазин Абибас имеет проблемы с поисковой строкой на собственном сайте: она выдает ошибки, неполные результаты и неверные подсказки. Вы – скаут команды Абибас. Ваша задача – сделать подборку из 10-12 конкретных готовых (или почти готовых) продуктов, решающих эту проблему, и выбрать 2-3 оптимальных, чтобы представить их руководству (принцип выбора должен быть понятен). География продуктов-решений не имеет значения. Все предпосылки относительно компании Абибас придумайте сами.</div>
-    <div class="card soft" style="margin-top:12px"><b>Задание №2.</b> В Вашу компанию обратился инвестор, который хочет вложить деньги в проект по строительству завода по рыбопереработке в Московской области. До встречи с инвестором немного времени и руководитель просит подготовить Вас короткую первичную справку на 1-2 страницы о том, целесообразно ли создавать новое производство на этом рынке.</div>
-    <div class="card soft" style="margin-top:12px"><b>Задание №3.</b> ОАО «Аэрофлот» обратилось в Вашу Компанию с запросом на разработку программы инновационного развития (ПИР).<br><br><b>Задачи</b><br>1. Дать краткое описание ПИР своими словами, перечислить 1-2 нормативных документа, регулирующих разработку ПИР для акционерных обществ с госучастием и дать на них ссылку.<br>2. Переслать схему документа ПИР.<br>3. Выбрать несколько компаний-аналогов ОАО "Аэрофлот" для сравнения с целью выявления лучших практик ведения бизнеса. Тезисно описать принципы выбора и сравнения компаний.</div>
+    <div class="small" style="margin:6px 0 14px;line-height:1.6">Для выполнения заданий допускается использование любых открытых источников информации в пределах разумного (официальные сайты компаний, нормативные правовые акты, публикации, аналитические материалы, статистические данные, открытые базы данных и т.п.). Использование систем искусственного интеллекта и Интернета при решении задач не допускается. Если в условии задания отсутствует информация, необходимая для выполнения анализа, допускается сделать собственные обоснованные допущения. Все принятые допущения должны быть явно перечислены в начале соответствующего задания. При использовании информации из открытых источников рекомендуется указывать основные использованные источники. Ориентировочное время выполнения одного задания — 30-60 минут.</div>
+    <div class="card soft" style="margin-top:12px"><b>Задание №1. Подбор решения для поисковой системы интернет-магазина</b><br><br>Интернет-магазин «Абибас» сталкивается с проблемами в работе поисковой строки на собственном сайте: поиск выдает ошибки, неполные результаты и нерелевантные подсказки.<br>Представьте, что Вы являетесь аналитиком, которому поручено подобрать готовое решение для модернизации поиска.<br>Необходимо:<br>1. Найти и кратко описать 8–10 готовых решений, представленных на рынке.<br>2. Определить критерии сравнения решений и обосновать их выбор.<br>3. Провести сравнительный анализ найденных решений.<br>4. Выбрать 2–3 наиболее подходящих решения для интернет-магазина.<br>5. Подготовить рекомендации для руководства с обоснованием выбора.<br>6. При отсутствии информации о компании допускается самостоятельно сформулировать необходимые допущения.<br><br>Результат: Аналитическая записка объемом до 3 страниц.</div>
+    <div class="card soft" style="margin-top:12px"><b>Задание №2.</b><br>В компанию обратился инвестор, рассматривающий возможность строительства завода по рыбопереработке в Московской области.<br>До встречи с инвестором остается немного времени. Руководитель просит подготовить краткую аналитическую справку о целесообразности выхода на данный рынок.<br>Необходимо:<br>1. Подготовить экспресс-оценку инвестиционной привлекательности проекта и отразить:<br>2. Общую характеристику рынка.<br>3. Основные тенденции развития отрасли.<br>4. Ключевых участников рынка.<br>5. Потенциальные преимущества проекта.<br>6. Основные ограничения и риски.<br>7. Предварительный вывод о целесообразности реализации проекта.<br><br>Результат: Аналитическая справка объемом 1–2 страницы.</div>
+    <div class="card soft" style="margin-top:12px"><b>Задание №3. ПАО «Аэрофлот» и ПИР</b><br><br>ПАО «Аэрофлот» обратилось в компанию с запросом на разработку программы инновационного развития (ПИР).<br>Необходимо:<br>1. Кратко описать ПИР. Дать определение программы инновационного развития своими словами. Указать не менее двух нормативных документов, регулирующих разработку ПИР для акционерных обществ с государственным участием. Привести ссылки на использованные нормативные документы.<br>2. Представить структуру ПИР. Подготовить рекомендуемую структуру программы инновационного развития с кратким описанием основных разделов.<br>3. Подобрать компании для бенчмаркинга. Предложить 5–7 компаний-аналогов для сравнения с ПАО «Аэрофлот». Описать критерии выбора компаний. Указать основные направления сравнения для выявления лучших практик.<br><br>Результат: Аналитическая записка объемом до 3 страниц.</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px"><label style="display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff"><span style="font-weight:800">Прикрепить файл</span><input id="taskFile" type="file" multiple style="padding:8px;max-width:280px"></label></div>
   </section>
 </main>
 
@@ -476,7 +323,7 @@ function toggle(letter){
   render();
 }
 
-function next(){
+async function next(){
   clearInterval(timer);
   const q = DATA[idx];
   if(q.type === 'open'){
@@ -491,8 +338,12 @@ function next(){
     }
   }
   remainingByQ[idx] = remaining;
-  if(idx < DATA.length - 1){ idx++; render(); }
-  else finish();
+  if(idx < DATA.length - 1){
+    idx++;
+    render();
+  }else{
+    await finish();
+  }
 }
 
 function prev(){
@@ -503,7 +354,7 @@ function prev(){
   }
 }
 
-function finish(){
+async function finish(){
   clearInterval(timer);
   el('testCard').classList.add('hidden');
   el('resultCard').classList.remove('hidden');
@@ -527,6 +378,8 @@ function finish(){
     score: candScore,
     total,
     pct,
+    taskAnswer: el('openAnswer').value.trim(),
+    files: Array.from(el('taskFile')?.files || []).map(f => ({name:f.name,size:f.size,type:f.type})),
     answers: DATA.map((q,i) => ({
       block:q.block,
       question:q.question,
@@ -535,6 +388,7 @@ function finish(){
       status:q.type === 'open' ? 'На проверке' : (((answers[i] || []).slice().sort().join('|') === (q.correct || []).slice().sort().join('|')) ? 'Верно' : 'Неверно')
     }))
   };
+
   const runs = loadRuns();
   runs.unshift(run);
   saveRuns(runs.slice(0,100));
@@ -550,6 +404,13 @@ function finish(){
     tr.innerHTML = `<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;
     tb.appendChild(tr);
   });
+
+  try{
+    const fd = new FormData();
+    fd.append('payload', JSON.stringify(run));
+    for(const f of (el('taskFile')?.files || [])) fd.append('files[]', f);
+    await fetch('submit.php', { method:'POST', body:fd });
+  }catch(e){}
 }
 
 function adminLogin(){
@@ -571,7 +432,7 @@ function adminLogin(){
     <div id="adminRunDetail" style="margin-top:14px"></div>
   `;
   document.querySelectorAll('.runLink').forEach(a=>{
-    a.onclick = (e)=>{
+    a.onclick = e=>{
       e.preventDefault();
       showRun(Number(a.dataset.idx));
     };
@@ -588,7 +449,8 @@ function showRun(i){
     <div class="small">
       Email: ${r.email || '—'}<br>
       Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>
-      Баллы: ${r.score} / ${r.total} (${r.pct}%)
+      Баллы: ${r.score} / ${r.total} (${r.pct}%)<br>
+      Файлы: ${(r.files || []).map(f=>f.name).join(', ') || '—'}
     </div>
     <div style="overflow:auto;max-height:420px;margin-top:12px">
       <table>
