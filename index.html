@@ -109,26 +109,10 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;ve
       </table>
     </div>
   </section>
-
-  <section class="card hidden" id="extraTasksBlock" style="grid-column:1/-1;margin-top:12px">
-    <h2 style="margin-top:0">Дополнительные задания</h2>
-    <div class="small" style="margin:6px 0 14px;line-height:1.6">
-      Для выполнения заданий допускается использование любых открытых источников информации в пределах разумного (официальные сайты компаний, нормативные правовые акты, публикации, аналитические материалы, статистические данные, открытые базы данных и т.п.). Использование систем искусственного интеллекта и Интернета при решении задач не допускается. Если в условии задания отсутствует информация, необходимая для выполнения анализа, допускается сделать собственные обоснованные допущения. Все принятые допущения должны быть явно перечислены в начале соответствующего задания. При использовании информации из открытых источников рекомендуется указывать основные использованные источники. Ориентировочное время выполнения одного задания — 30-60 минут.
-    </div>
-    <div class="card soft" style="margin-top:12px"><b>Задание №1. Подбор решения для поисковой системы интернет-магазина</b><br><br>Интернет-магазин «Абибас» сталкивается с проблемами в работе поисковой строки на собственном сайте: поиск выдает ошибки, неполные результаты и нерелевантные подсказки.<br>Представьте, что Вы являетесь аналитиком, которому поручено подобрать готовое решение для модернизации поиска.<br>Необходимо:<br>1. Найти и кратко описать 8–10 готовых решений, представленных на рынке.<br>2. Определить критерии сравнения решений и обосновать их выбор.<br>3. Провести сравнительный анализ найденных решений.<br>4. Выбрать 2–3 наиболее подходящих решения для интернет-магазина.<br>5. Подготовить рекомендации для руководства с обоснованием выбора.<br>6. При отсутствии информации о компании допускается самостоятельно сформулировать необходимые допущения.<br><br>Результат: Аналитическая записка объемом до 3 страниц.</div>
-    <div class="card soft" style="margin-top:12px"><b>Задание №2.</b><br>В компанию обратился инвестор, рассматривающий возможность строительства завода по рыбопереработке в Московской области.<br>До встречи с инвестором остается немного времени. Руководитель просит подготовить краткую аналитическую справку о целесообразности выхода на данный рынок.<br>Необходимо:<br>1. Подготовить экспресс-оценку инвестиционной привлекательности проекта и отразить:<br>2. Общую характеристику рынка.<br>3. Основные тенденции развития отрасли.<br>4. Ключевых участников рынка.<br>5. Потенциальные преимущества проекта.<br>6. Основные ограничения и риски.<br>7. Предварительный вывод о целесообразности реализации проекта.<br><br>Результат: Аналитическая справка объемом 1–2 страницы.</div>
-    <div class="card soft" style="margin-top:12px"><b>Задание №3. ПАО «Аэрофлот» и ПИР</b><br><br>ПАО «Аэрофлот» обратилось в компанию с запросом на разработку программы инновационного развития (ПИР).<br>Необходимо:<br>1. Кратко описать ПИР. Дать определение программы инновационного развития своими словами. Указать не менее двух нормативных документов, регулирующих разработку ПИР для акционерных обществ с государственным участием. Привести ссылки на использованные нормативные документы.<br>2. Представить структуру ПИР. Подготовить рекомендуемую структуру программы инновационного развития с кратким описанием основных разделов.<br>3. Подобрать компании для бенчмаркинга. Предложить 5–7 компаний-аналогов для сравнения с ПАО «Аэрофлот». Описать критерии выбора компаний. Указать основные направления сравнения для выявления лучших практик.<br><br>Результат: Аналитическая записка объемом до 3 страниц.</div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
-      <label style="display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:#fff">
-        <span style="font-weight:800">Прикрепить файл</span>
-        <input id="taskFile" type="file" multiple style="padding:8px;max-width:280px">
-      </label>
-    </div>
-  </section>
 </main>
 
 <script>
-const DATA = [
+const DATA=[
 {block:'Экономика',type:'single',question:'Мировая экономика — это:',options:['сфера устойчивых товарно-денежных отношений между странами, основанная на международном разделении труда','система кредитных отношений между странами','совокупность национальных экономик стран мира, связанных между собой обменом товаров, услуг и движением факторов производства','объединение стран в международные экономические организации'],correct:['c']},
 {block:'Экономика',type:'single',question:'Для этапа развития мировой экономики, который начался в 70-е гг. ХХ в., характерны:',options:['кризисные явления, которые усилили тенденции к автаркии','начало перехода промышленно развитых стран к интенсивному типу экономического роста на основе современных наукоемких и ресурсосберегающих производств','распад колониальной системы и возникновение крупнейших транснациональных корпораций, которые стали важным элементом мировой экономики','захват крупнейшими компаниями основных мировых источников сырья и рынков сбыта'],correct:['b']},
 {block:'Экономика',type:'single',question:'Уровень экономического развития страны характеризует показатель:',options:['ВВП на душу населения в год','доля обрабатывающей промышленности в объеме промышленной продукции','общий объем ВВП, произведенный за год','торговый баланс страны'],correct:['a']},
@@ -243,231 +227,24 @@ const DATA = [
 {block:'Открытые вопросы',type:'open',question:'Кто написал роман «Отцы и дети»? Перечислите ещё 3 произведения этого автора.',time:240},
 {block:'Открытые вопросы',type:'open',question:'Как называется газ, поддерживающий горение?',time:240},
 {block:'Открытые вопросы',type:'open',question:'Назовите самую большую артерию человека',time:240},
-{block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',time:240}
+{block:'Открытые вопросы',type:'open',question:'Ускорение ракеты возрастает даже в том случае, когда равнодействующая приложенных к ней сил остается неизменной. Почему?',time:240},
+{block:'Дополнительные задания',type:'task',question:'Задание №1. Подбор решения для поисковой системы интернет-магазина. Интернет-магазин «Абибас» сталкивается с проблемами в работе поисковой строки: поиск выдает ошибки, неполные результаты и нерелевантные подсказки. Необходимо: найти и кратко описать 8–10 готовых решений; определить критерии сравнения; провести сравнительный анализ; выбрать 2–3 подходящих решения; подготовить рекомендации. Допускается самостоятельно сформулировать допущения. Результат: аналитическая записка объемом до 3 страниц. Ориентировочное время выполнения — 60 минут.',time:3600}
 ];
-
-const letters = ['a','b','c','d','e','f'];
-let idx = 0, timer = null, remaining = 0, answers = [], remainingByQ = {}, currentFio = '';
-const el = id => document.getElementById(id);
-
-function fmt(s){ s = Math.max(0,s); return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
-function secFor(q){ return q.type === 'open' ? (q.time || 240) : 120; }
-function loadRuns(){ try { return JSON.parse(localStorage.getItem('hr_test_runs') || '[]'); } catch(e){ return []; } }
-function saveRuns(runs){ localStorage.setItem('hr_test_runs', JSON.stringify(runs)); }
-
-function start(){
-  const fio = el('fio').value.trim();
-  const email = el('email').value.trim();
-  if(!fio || !email){ alert('Пожалуйста, заполните ФИО и Email.'); return; }
-  answers = DATA.map(() => null);
-  remainingByQ = {};
-  idx = 0;
-  currentFio = fio;
-  el('candidateCard').classList.add('hidden');
-  el('welcomeCard').classList.add('hidden');
-  el('adminCard').classList.add('hidden');
-  el('introRow').classList.add('hidden');
-  el('testCard').classList.remove('hidden');
-  el('resultCard').classList.add('hidden');
-  el('extraTasksBlock').classList.add('hidden');
-  render();
-}
-
-function render(){
-  clearInterval(timer);
-  const q = DATA[idx];
-  if(!q){ finish(); return; }
-
-  remaining = (remainingByQ[idx] != null ? remainingByQ[idx] : secFor(q));
-  const blockTotal = DATA.filter(x => x.block === q.block).length;
-  const blockIndex = DATA.slice(0, idx + 1).filter(x => x.block === q.block).length;
-
-  el('meta').textContent = `${q.block} · Вопрос ${blockIndex} из ${blockTotal}`;
-  el('qText').textContent = q.question;
-  el('bar').style.width = (((idx + 1) / DATA.length) * 100) + '%';
-  el('timer').textContent = fmt(remaining);
-
-  const opts = el('opts');
-  opts.innerHTML = '';
-  el('openAnswer').classList.toggle('hidden', q.type !== 'open');
-
-  if(q.type === 'open'){
-    el('openAnswer').value = answers[idx]?.text || '';
-  }else{
-    const chosen = answers[idx] || [];
-    q.options.forEach((o, i) => {
-      const letter = letters[i];
-      const selected = chosen.includes(letter);
-      const d = document.createElement('div');
-      d.className = 'opt' + (selected ? ' sel' : '');
-      d.innerHTML = `<div class="optMark"></div><div class="optText"><span class="optLetter">${letter.toUpperCase()}</span>${o}</div>`;
-      d.onclick = () => toggle(letter);
-      opts.appendChild(d);
-    });
-  }
-
-  timer = setInterval(() => {
-    remaining--;
-    el('timer').textContent = fmt(remaining);
-    remainingByQ[idx] = remaining;
-    if(remaining <= 0) next();
-  }, 1000);
-}
-
-function toggle(letter){
-  const q = DATA[idx];
-  const cur = new Set(answers[idx] || []);
-  if(cur.has(letter)) cur.delete(letter);
-  else if(q.type === 'single'){ cur.clear(); cur.add(letter); }
-  else cur.add(letter);
-  answers[idx] = Array.from(cur);
-  render();
-}
-
-async function next(){
-  clearInterval(timer);
-  const q = DATA[idx];
-  if(q.type === 'open'){
-    const v = el('openAnswer').value.trim();
-    if(!v){ alert('Ответ обязателен.'); render(); return; }
-    answers[idx] = {text:v};
-  }else{
-    if(!(answers[idx] && answers[idx].length)){
-      alert('Выберите ответ.');
-      render();
-      return;
-    }
-  }
-  remainingByQ[idx] = remaining;
-  if(idx < DATA.length - 1){
-    idx++;
-    render();
-  }else{
-    await finish();
-  }
-}
-
-function prev(){
-  if(idx > 0){
-    remainingByQ[idx] = remaining;
-    idx--;
-    render();
-  }
-}
-
-async function finish(){
-  clearInterval(timer);
-  el('testCard').classList.add('hidden');
-  el('resultCard').classList.remove('hidden');
-  el('extraTasksBlock').classList.remove('hidden');
-
-  const fio = currentFio || el('fio').value.trim() || 'Без имени';
-  const candScore = DATA.filter((q,i)=> q.type !== 'open' && JSON.stringify((answers[i] || []).slice().sort()) === JSON.stringify((q.correct || []).slice().sort())).length;
-  const total = DATA.filter(q => q.type !== 'open').length;
-  const pct = total ? Math.round(candScore / total * 100) : 0;
-
-  el('rCand').textContent = fio;
-  el('rScore').textContent = `${candScore} / ${total}`;
-  el('rPct').textContent = `${pct}%`;
-
-  const run = {
-    fio,
-    email: el('email').value.trim(),
-    date: new Date().toISOString(),
-    score: candScore,
-    total,
-    pct,
-    taskAnswer: el('openAnswer').value.trim(),
-    files: Array.from(el('taskFile')?.files || []).map(f => ({name:f.name,size:f.size,type:f.type})),
-    answers: DATA.map((q,i) => ({
-      block:q.block,
-      question:q.question,
-      answer:q.type === 'open' ? ((answers[i] && answers[i].text) || '') : (answers[i] || []).join('|'),
-      correct:q.correct ? q.correct.join('|') : '—',
-      status:q.type === 'open' ? 'На проверке' : (((answers[i] || []).slice().sort().join('|') === (q.correct || []).slice().sort().join('|')) ? 'Верно' : 'Неверно')
-    }))
-  };
-
-  const runs = loadRuns();
-  runs.unshift(run);
-  saveRuns(runs.slice(0,100));
-
-  const tb = el('tb');
-  tb.innerHTML = '';
-  DATA.forEach((q,i)=>{
-    const ans = answers[i];
-    const ansText = q.type === 'open' ? ((ans && ans.text) || '—') : ((ans || []).join('|') || '—');
-    const corText = q.correct ? q.correct.join('|') : '—';
-    const ok = q.type === 'open' ? 'На проверке' : (((ans || []).slice().sort().join('|') === (q.correct || []).slice().sort().join('|')) ? 'Верно' : 'Неверно');
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;
-    tb.appendChild(tr);
-  });
-
-  try{
-    const fd = new FormData();
-    fd.append('payload', JSON.stringify(run));
-    for(const f of (el('taskFile')?.files || [])) fd.append('files[]', f);
-    await fetch('submit.php', { method:'POST', body:fd });
-  }catch(e){}
-}
-
-function adminLogin(){
-  const pass = el('adminPass').value.trim();
-  if(pass !== 'klepa13412'){
-    el('adminStatus').textContent = 'Неверный пароль';
-    return;
-  }
-  const runs = loadRuns();
-  const rows = runs.map((r,i)=>`<tr><td>${i+1}</td><td><a href="#" class="adminLink runLink" data-idx="${i}">${r.fio}</a></td><td>${r.pct}%</td><td>${new Date(r.date).toLocaleString('ru-RU')}</td></tr>`).join('');
-  el('adminStatus').innerHTML = `
-    <div class="small">Пароль верный. Нажмите на ФИО, чтобы открыть результаты.</div>
-    <div style="overflow:auto;max-height:420px;margin-top:10px">
-      <table>
-        <thead><tr><th>#</th><th>ФИО</th><th>Процент</th><th>Дата</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>
-    <div id="adminRunDetail" style="margin-top:14px"></div>
-  `;
-  document.querySelectorAll('.runLink').forEach(a=>{
-    a.onclick = e=>{
-      e.preventDefault();
-      showRun(Number(a.dataset.idx));
-    };
-  });
-}
-
-function showRun(i){
-  const r = loadRuns()[i];
-  if(!r) return;
-  const d = el('adminRunDetail');
-  if(!d) return;
-  d.innerHTML = `
-    <h3 style="margin:0 0 10px">${r.fio}</h3>
-    <div class="small">
-      Email: ${r.email || '—'}<br>
-      Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>
-      Баллы: ${r.score} / ${r.total} (${r.pct}%)<br>
-      Файлы: ${(r.files || []).map(f=>f.name).join(', ') || '—'}
-    </div>
-    <div style="overflow:auto;max-height:420px;margin-top:12px">
-      <table>
-        <thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead>
-        <tbody>
-          ${r.answers.map((x,idx)=>`<tr><td>${idx+1}</td><td>${x.block}</td><td>${x.question}</td><td>${x.answer || '—'}</td><td>${x.correct}</td><td>${x.status}</td></tr>`).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-window.addEventListener('DOMContentLoaded',()=>{
-  el('startBtn').onclick = start;
-  el('nextBtn').onclick = next;
-  el('prevBtn').onclick = prev;
-  el('adminLoginBtn').onclick = adminLogin;
-});
+const letters=['a','b','c','d','e','f'];let idx=0,timer=null,remaining=0,answers=[],remainingByQ={},currentFio='';
+const el=id=>document.getElementById(id);
+function fmt(s){s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function secFor(q){return q.time || (q.type==='open'?240:120)}
+function loadRuns(){try{return JSON.parse(localStorage.getItem('hr_test_runs')||'[]')}catch(e){return[]}}
+function saveRuns(runs){localStorage.setItem('hr_test_runs',JSON.stringify(runs))}
+function start(){const fio=el('fio').value.trim();const email=el('email').value.trim();if(!fio||!email){alert('Пожалуйста, заполните ФИО и Email.');return}answers=DATA.map(()=>null);remainingByQ={};idx=0;currentFio=fio;el('candidateCard').classList.add('hidden');el('adminCard').classList.add('hidden');el('introRow').classList.add('hidden');el('testCard').classList.remove('hidden');el('resultCard').classList.add('hidden');render()}
+function render(){clearInterval(timer);const q=DATA[idx];if(!q){finish();return}remaining=(remainingByQ[idx]!=null?remainingByQ[idx]:secFor(q));const blockTotal=DATA.filter(x=>x.block===q.block).length;const blockIndex=DATA.slice(0,idx+1).filter(x=>x.block===q.block).length;el('meta').textContent=`${q.block} · Вопрос ${blockIndex} из ${blockTotal}`;el('qText').textContent=q.question;el('bar').style.width=(((idx+1)/DATA.length)*100)+'%';el('timer').textContent=fmt(remaining);const opts=el('opts');opts.innerHTML='';el('openAnswer').classList.toggle('hidden',q.type!=='open');if(q.type==='open' || q.type==='task'){el('openAnswer').value=answers[idx]?.text||'';el('openAnswer').placeholder=q.type==='task'?'Введите развернутый ответ на 60 минут':'Введите ответ'}else{const chosen=answers[idx]||[];q.options.forEach((o,i)=>{const letter=letters[i];const selected=chosen.includes(letter);const d=document.createElement('div');d.className='opt'+(selected?' sel':'');d.innerHTML=`<div class="optMark"></div><div class="optText"><span class="optLetter">${letter.toUpperCase()}</span>${o}</div>`;d.onclick=()=>toggle(letter);opts.appendChild(d)})}timer=setInterval(()=>{remaining--;el('timer').textContent=fmt(remaining);remainingByQ[idx]=remaining;if(remaining<=0)next()},1000)}
+function toggle(letter){const q=DATA[idx];const cur=new Set(answers[idx]||[]);if(cur.has(letter))cur.delete(letter);else if(q.type==='single'){cur.clear();cur.add(letter)}else cur.add(letter);answers[idx]=Array.from(cur);render()}
+async function next(){clearInterval(timer);const q=DATA[idx];if(q.type==='open' || q.type==='task'){const v=el('openAnswer').value.trim();if(!v){alert('Ответ обязателен.');render();return}answers[idx]={text:v}}else{if(!(answers[idx]&&answers[idx].length)){alert('Выберите ответ.');render();return}}remainingByQ[idx]=remaining;if(idx<DATA.length-1){idx++;render()}else finish()}
+function prev(){if(idx>0){remainingByQ[idx]=remaining;idx--;render()}}
+async function finish(){clearInterval(timer);el('testCard').classList.add('hidden');el('resultCard').classList.remove('hidden');const fio=currentFio||el('fio').value.trim()||'Без имени';const candScore=DATA.filter((q,i)=>q.type!=='open'&&q.type!=='task'&&JSON.stringify((answers[i]||[]).slice().sort())===JSON.stringify((q.correct||[]).slice().sort())).length;const total=DATA.filter(q=>q.type!=='open'&&q.type!=='task').length;const pct=total?Math.round(candScore/total*100):0;el('rCand').textContent=fio;el('rScore').textContent=`${candScore} / ${total}`;el('rPct').textContent=`${pct}%`;const run={fio,email:el('email').value.trim(),date:new Date().toISOString(),score:candScore,total,pct,taskAnswer:answers[DATA.length-1]?.text||'',answers:DATA.map((q,i)=>({block:q.block,question:q.question,answer:q.type==='open'||q.type==='task'?((answers[i]&&answers[i].text)||''):(answers[i]||[]).join('|'),correct:q.correct?q.correct.join('|'):'—',status:(q.type==='open'||q.type==='task')?'На проверке':(((answers[i]||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно')}))};const runs=loadRuns();runs.unshift(run);saveRuns(runs.slice(0,100));const tb=el('tb');tb.innerHTML='';DATA.forEach((q,i)=>{const ans=answers[i];const ansText=q.type==='open'||q.type==='task'?((ans&&ans.text)||'—'):((ans||[]).join('|')||'—');const corText=q.correct?q.correct.join('|'):'—';const ok=(q.type==='open'||q.type==='task')?'На проверке':(((ans||[]).slice().sort().join('|')===(q.correct||[]).slice().sort().join('|'))?'Верно':'Неверно');const tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td>${q.block}</td><td>${q.question}</td><td>${ansText}</td><td>${corText}</td><td>${ok}</td>`;tb.appendChild(tr)});try{await fetch('submit.php',{method:'POST',body:JSON.stringify(run),headers:{'Content-Type':'application/json'}})}catch(e){}}
+function adminLogin(){const pass=el('adminPass').value.trim();if(pass!=='klepa13412'){el('adminStatus').textContent='Неверный пароль';return}const runs=loadRuns();const rows=runs.map((r,i)=>`<tr><td>${i+1}</td><td><a href="#" class="adminLink runLink" data-idx="${i}">${r.fio}</a></td><td>${r.pct}%</td><td>${new Date(r.date).toLocaleString('ru-RU')}</td></tr>`).join('');el('adminStatus').innerHTML=`<div class="small">Пароль верный. Нажмите на ФИО, чтобы открыть результаты.</div><div style="overflow:auto;max-height:420px;margin-top:10px"><table><thead><tr><th>#</th><th>ФИО</th><th>Процент</th><th>Дата</th></tr></thead><tbody>${rows}</tbody></table></div><div id="adminRunDetail" style="margin-top:14px"></div>`;document.querySelectorAll('.runLink').forEach(a=>{a.onclick=e=>{e.preventDefault();showRun(Number(a.dataset.idx))}})}
+function showRun(i){const r=loadRuns()[i];if(!r)return;const d=el('adminRunDetail');if(!d)return;d.innerHTML=`<h3 style="margin:0 0 10px">${r.fio}</h3><div class="small">Email: ${r.email||'—'}<br>Дата: ${new Date(r.date).toLocaleString('ru-RU')}<br>Баллы: ${r.score} / ${r.total} (${r.pct}%)</div><div style="overflow:auto;max-height:420px;margin-top:12px"><table><thead><tr><th>#</th><th>Блок</th><th>Вопрос</th><th>Ответ</th><th>Правильно</th><th>Статус</th></tr></thead><tbody>${r.answers.map((x,idx)=>`<tr><td>${idx+1}</td><td>${x.block}</td><td>${x.question}</td><td>${x.answer||'—'}</td><td>${x.correct}</td><td>${x.status}</td></tr>`).join('')}</tbody></table></div>`}
+window.addEventListener('DOMContentLoaded',()=>{el('startBtn').onclick=start;el('nextBtn').onclick=next;el('prevBtn').onclick=prev;el('adminLoginBtn').onclick=adminLogin});
 </script>
 </body>
 </html>
